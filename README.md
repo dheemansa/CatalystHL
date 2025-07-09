@@ -12,35 +12,35 @@
 	</tr>
 	<tr>
 	    <td>OS</td>
-	    <td>[Your OS here, e.g., Arch Linux]</td>
+	    <td>Arch Linux</td>
 	</tr>
 	<tr>
 	    <td>WM</td>
-	    <td>[Your Window Manager here, e.g., BSPWM | Hyprland]</td>
+	    <td>Hyprland</td>
 	</tr>
 	<tr>
 	    <td>Bar</td>
-	    <td>[Your Bar here, e.g., Polybar | Waybar]</td>
+	    <td>Waybar</td>
 	</tr>
 	<tr>
 	    <td>Compositor</td>
-	    <td>[Your Compositor here, e.g., Picom | Built-in]</td>
+	    <td></td>
 	</tr>
 	<tr>
 	    <td>Terminal</td>
-	    <td>[Your Terminal here, e.g., Kitty]</td>
+	    <td>Kitty</td>
 	</tr>
 	<tr>
 	    <td>App Launcher</td>
-	    <td>[Your App Launcher here, e.g., Rofi]</td>
+	    <td>Rofi</td>
 	</tr>
 	<tr>
 	    <td>Notify Daemon</td>
-	    <td>[Your Notify Daemon here, e.g., Dunst]</td>
+	    <td>Dunst</td>
 	</tr>
 	<tr>
 	    <td>Shell</td>
-	    <td>[Your Shell here, e.g., Fish]</td>
+	    <td>Fish</td>
 	</tr>
 </table>
 <div align="left">
