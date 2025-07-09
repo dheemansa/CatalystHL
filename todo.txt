@@ -1,5 +1,5 @@
 install hyprland kitty waybar firefox sddm(and enable sddm)
-pamixer brightnessctl
+pamixer brightnessctl dunst 
 
 
 
