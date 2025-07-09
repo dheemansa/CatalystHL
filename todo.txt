@@ -1,1 +1,7 @@
-install hyprland kitty waybar firefox
+install hyprland kitty waybar firefox sddm(and enable sddm)
+
+
+
+install font
+pacman -S ttf-jetbrains-mono-nerd
+fc-cache -fv
