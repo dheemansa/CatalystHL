@@ -1,7 +1,7 @@
 pacman 
 install hyprland kitty waybar firefox sddm(and enable sddm)
 pamixer brightnessctl dunst 
-pacman-contrib bc
+pacman-contrib 
 
 paru 
 tela-circle-icon-theme-dracula
