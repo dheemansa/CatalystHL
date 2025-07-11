@@ -1,6 +1,6 @@
 install hyprland kitty waybar firefox sddm(and enable sddm)
 pamixer brightnessctl dunst 
-pacman-contrib
+pacman-contrib bc
 
 
 install font
