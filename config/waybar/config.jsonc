@@ -8,54 +8,62 @@
     "gtk-layer-shell": true,
     "reload_style_on_change": true,
 
-    //==> Modules Layout
-    ///////////////////////////////////////////////////////////////
-	"modules-left": [
-		"custom/padd","group/system-info","custom/l_end","hyprland/workspaces","custom/r_end","custom/l_end","wlr/taskbar","custom/r_end","custom/padd"
-	],
-	"modules-center": [
-		"custom/l_end","idle_inhibitor","clock","custom/r_end"
-	],
-    
-	"modules-right": [
-		"group/system-levels","custom/padd",
-		"group/control-panel", "custom/padd"
-	],
-    	"group/system-info": {
-		"orientation": "horizontal",
-		"modules": [
-			"cpu",
-			"memory"
-		]
-	},
-	"group/system-levels": {
-		"orientation": "horizontal",
-		"modules": [
-			"custom/brightness",
-			"custom/battery",
-			"custom/volume",
-			"custom/microphone"
-		]
-	},
-	"group/control-panel": {
-		"orientation": "horizontal",
-		"modules": [
-			"custom/system-update",
-			"custom/do-not-disturb",
-			"custom/vpn",
-			"custom/bluetooth",
-			"custom/networkmanager",
-			"custom/power"
-		]
-	},
+    "modules-left": [
+        "custom/padd",
+        "group/system-info",
+        "custom/l_end",
+        "hyprland/workspaces",
+        "custom/r_end"
+    ],
+    "modules-center": [
+        "custom/l_end",
+        "idle_inhibitor",
+        "clock",
+        "custom/r_end"
+    ],
+    "modules-right": [
+        "group/system-levels",
+        "custom/padd",
+        "group/control-panel",
         
-    //==> Left Modules
-    ///////////////////////////////////////////////////////////////
+        "custom/padd"
+    ],
+
+    "group/system-info": {
+        "orientation": "horizontal",
+        "modules": [
+            "cpu",
+            "memory",
+            "custom/cpu-temp"
+        ]
+    },
+    "group/system-levels": {
+        "orientation": "horizontal",
+        "modules": [
+            "backlight","custom/space",
+            "battery","custom/space",
+            "pulseaudio#output", "custom/space",
+            "pulseaudio#input"
+            
+        ]
+    },
+    "group/control-panel": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/do-not-disturb", "custom/space",
+            "custom/bluetooth", "custom/space",
+            "network", "custom/space",
+            "custom/power"
+        ]
+    },
+
+
     "tray": {
         "icon-size": 18,
         "rotate": 0,
         "spacing": 5
     },
+
     "hyprland/workspaces": {
         "rotate": 0,
         "all-outputs": true,
@@ -66,33 +74,28 @@
         "on-scroll-down": "hyprctl dispatch workspace +1",
         "persistent-workspaces": {}
     },
-	"wlr/taskbar": {
-		"format": "{icon}",
-		"rotate": 0,
-		"icon-size": 18,
-		"icon-theme": "Tela-circle-dracula",
-        "spacing": 0,
-		"tooltip-format": "{title}",
-		"on-click": "activate",
-		"on-click-middle": "close",
-		"app_ids-mapping": {
-			"firefoxdeveloperedition": "firefox-developer-edition"
-		}
-	},
 
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", "", ""],
+        "tooltip": false
+    },
 
-
-    //==> Middle Modules
-    ///////////////////////////////////////////////////////////////
     "cpu": {
         "format": "　{usage}%"
     },
     "memory": {
-        "format": "    {}%"
+        "format": "  {}%"
     },
 
-    //==> Right Modules
-    ///////////////////////////////////////////////////////////////
+    "custom/cpu-temp": {
+        "exec": "~/.config/waybar/scripts/get-cpu-temp.sh",
+        "interval": 5,
+        "format": "{}",
+        "return-type": "json"
+    },
+
     "clock": {
         "format": "{:%H:%M %p}",
         "rotate": 0,
@@ -117,6 +120,7 @@
             "on-scroll-down": "shift_down"
         }
     },
+
     "idle_inhibitor": {
         "format": "{icon}",
         "rotate": 0,
@@ -125,131 +129,139 @@
             "deactivated": " "
         }
     },
-    "custom/battery": {
-        "exec": "sh ~/bin/battery.sh --status --discharged-color \"#f38ba8\" --charged-color \"#a6e3a1\" | cat",
-        "return-type": "raw",
-	    "format": "{}  ",
-        "interval": 3,
-	    "rotate": 0,
-	    "on-click": "sh ~/bin/battery.sh --notify",
-        "tooltip": false
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}%",
+        "format-plugged": "{icon} {capacity}%",
+
+
+        "format-icons": {
+            "discharging": ["󰂎", "󰁺", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢜", "󰢝", "󰂆", "󰂇", "󰂈", "󰢞", "󰂉", "󰂊", "󰂋", "󰂅"],
+            "plugged": ["󰢜", "󰢝", "󰂆", "󰂇", "󰂈","󰢞", "󰂉", "󰂊", "󰂋", "󰂅"]
+        }
+
     },
-    "custom/brightness": {
-        "exec": "sh ~/bin/brightness.sh --status --color \"#61afef\" | cat",
-        "return-type": "raw",
-        "format": "{}  ",
-        "interval": 1,
-        "rotate": 0,
-        "on-scroll-up": "sh ~/bin/brightness.sh --up",
-        "on-scroll-down": "sh ~/bin/brightness.sh --down",
-        "on-click-left": "sh ~/bin/brightness.sh --max",
-        "on-click-right": "sh ~/bin/brightness.sh --min",
-        "tooltip": false
-    },
-    "custom/volume": {
-        "exec": "sh ~/bin/volume.sh --device output --status --disabled-color \"#f38ba8\" --enabled-color \"#a6e3a1\" | cat",
-        "return-type": "raw",
-	    "format": "{}  ",
-        "interval": 1,
-	    "rotate": 0,
-	    "on-click": "sh ~/bin/volume.sh --device output --action toggle",
-	    "on-scroll-up": "sh ~/bin/volume.sh --device output --action increase",
-	    "on-scroll-down": "sh ~/bin/volume.sh --device output --action decrease",
-	    "scroll-step": 5,
-        "tooltip": false
-    },
-    "custom/microphone": {
-        "exec": "sh ~/bin/volume.sh --device input --status --disabled-color \"#f38ba8\" --enabled-color \"#a6e3a1\" | cat",
-        "return-type": "raw",
-	    "format": "{}",
-        "interval": 1,
-	    "rotate": 0,
-	    "on-click": "sh ~/bin/volume.sh --device input --action toggle",
-	    "on-scroll-up": "sh ~/bin/volume.sh --device input --action increase",
-	    "on-scroll-down": "sh ~/bin/volume.sh --device input --action decrease",
-	    "scroll-step": 5,
-        "tooltip": false
-    },
-    "hyprland/language": {
-        "format": "{short} {variant}",
-        "rotate": 0,
-        "min-length": 2,
-        "tooltip": false
-    },
-    "custom/system-update": {
-        "exec": "sh ~/bin/system-update.sh --status --unupdated-color \"#fab387\" --updated-color \"#a6e3a1\" | cat",
-        "return-type": "raw",
-        "format": "{} ",
-        "rotate": 0,
-        "on-click": "CHECKUPDATES_DB=\"/tmp/checkup-db-${UID}-$$\" sh ~/bin/system-update.sh",
-        "interval": 86400,
-        "tooltip": false
-    },
+
     "custom/do-not-disturb": {
         "exec": "sh ~/bin/do-not-disturb.sh --status --disabled-color \"#f38ba8\" --enabled-color \"#a6e3a1\" | cat",
         "return-type": "raw",
-        "format": "{} ",
+        "format": "{}",
         "interval": 1,
         "rotate": 0,
         "on-click": "sh ~/bin/do-not-disturb.sh",
         "tooltip": false
     },
-    "custom/vpn": {
-        "exec": "sh ~/bin/rofi-menus/vpn-manager.sh --status --disabled-color \"#f38ba8\" --enabled-color \"#a6e3a1\" | cat",
-        "return-type": "raw",
-        "format": "{} ",
-        "interval": 3,
-        "rotate": 0,
-        "on-click": "sh ~/bin/rofi-menus/vpn-manager.sh",
-        "tooltip": false
-    },
+
     "custom/bluetooth": {
-        "format": "<span color=\"#89b4fa\">󰂯  </span>",
+        "format": "<span color=\"#89b4fa\">󰂯</span>",
         "interval": 3,
         "rotate": 0,
         "on-click": "blueman-manager",
         "tooltip": false
     },
+
     "custom/networkmanager": {
-        "exec": "sh ~/bin/rofi-menus/network-manager.sh --status --disabled-color \"#f38ba8\" --enabled-color \"#a6e3a1\" | cat",
+        "exec": "sh ~/.config/rofi/scripts/network-status.sh --enabled-color \"#a6e3a1\" --disabled-color \"#f38ba8\" | cat",
         "return-type": "raw",
-        "format": "{}  ",
+        "format": "{} ",
         "interval": 3,
         "rotate": 0,
-        "on-click": "sh ~/bin/rofi-menus/network-manager.sh",
+        "on-click": "sh ~/.config/rofi/scripts/network-manager.sh",
         "tooltip": false
     },
+
     "custom/power": {
-        "on-click": "sh ~/bin/rofi-menus/powermenu.sh",
+        "on-click": "sh ~/.config/rofi/scripts/powermenu.sh,
         "format": "<span color=\"#f38ba8\"> </span>",
         "rotate": 0,
         "tooltip": false
     },
 
-	
-    //==> Other Modules
-    ///////////////////////////////////////////////////////////////
+    "custom/space": {
+        "format": "  ",
+        "tooltip": false
+    },
     "custom/l_end": {
         "format": " ",
-        "interval" : "once",
+        "interval": "once",
         "tooltip": false
     },
-
     "custom/r_end": {
         "format": " ",
-        "interval" : "once",
+        "interval": "once",
         "tooltip": false
     },
-
     "custom/padd": {
         "format": "  ",
-        "interval" : "once",
+        "interval": "once",
         "tooltip": false
     },
 
-    "custom/padd_bg": {
-        "format": "  ",
-        "interval" : "once",
-        "tooltip": false
+    "pulseaudio#output": {
+        "format": "{icon}  {volume}%",
+        "format-muted": "  off",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "max-volume": 100,
+        "scroll-step": 2,
+        "smooth-scrolling-threshold": 1,
+        "on-click": "pamixer -t",
+        "on-click-middle": "pavucontrol",
+    },
+
+    "pulseaudio#input": {
+        "format-source": " {volume}%",
+        "format-source-muted": "  muted",
+        "format": "{format_source}",
+        "scroll-step": 1,
+        "smooth-scrolling-threshold": 1,
+        "max-volume": 100,
+        "on-click": "pamixer --default-source -t",
+        "on-click-middle": "pavucontrol",
+        "on-scroll-up": "pamixer --default-source -i 2",
+        "on-scroll-down": "pamixer --default-source -d 2",
+    },
+
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "{icon}",
+        "format-linked": "{icon}",
+        "format-disconnected": "{icon}",
+        "format-icons": {
+            "wifi": [
+                "󰤯 ",  // 0–25% signal
+                "󰤟 ",  // 25–50%
+                "󰤥 ",  // 50–75%
+                "󰤨 "   // 75–100%
+            ],
+            "ethernet": "󰈀 ",
+            "linked": "󰤠 ",
+            "disconnected": "󰤭 "
+        },
+
+        "tooltip": false,
+        "on-click": "sh ~/.config/rofi/scripts/network-manager.sh"
     }
+
+
+/*
+    "custom/dunst": {
+        "format": "{}",
+        "exec": "dunstctl is-paused | grep -q true && echo -n 󰂛 || echo -n 󰂚",
+        "interval": 5,
+        "signal": 8,
+        "tooltip": true,
+        "on-click": "if dunstctl is-paused | grep -q true; then notify-send '󰂛 Notifications Paused'; else notify-send '󰂚 Notifications Enabled' && sleep 3; fi;dunstctl set-paused toggle; pkill -SIGRTMIN+8 waybar"
+    }
+*/
+
+
 }

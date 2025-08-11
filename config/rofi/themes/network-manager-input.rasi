@@ -1,0 +1,110 @@
+* {
+    font: "JetBrainsMono Nerd Font 16";
+    g-spacing: 10px;
+    g-margin: 0;
+    b-color: #000000FF;
+    fg-color: #FFFFFFFF;
+    fgp-color: #888888FF;
+    b-radius: 8px;
+    g-padding: 8px;
+    hl-color: #FFFFFFFF;
+    hlt-color: #000000FF;
+    alt-color: #111111FF;
+    wbg-color: #000000CC;
+    w-border: 2px solid;
+    w-border-color: #FFFFFFFF;
+    w-padding: 12px;
+}
+
+/*** WINDOW ***/
+window {
+    width: 700px;
+    height: 300px;
+    border-radius: @b-radius;
+    background-color: @wbg-color;
+    border: @w-border;
+    border-color: @w-border-color;
+    padding: @w-padding;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+}
+
+/*** MAIN LAYOUT ***/
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: 20px 8px 8px 20px;
+    children: ["inputbar", "listview", "message"];
+}
+
+/*** INPUT BAR ***/
+inputbar {
+    spacing: 10px;
+    padding: 8px;
+    margin: 0px 0px 20px 0px;
+    text-color: @fg-color;
+    background-color: @alt-color;
+    border-radius: @b-radius;
+    children: ["prompt", "entry"];
+}
+
+prompt {
+    text-color: @fgp-color;
+    background-color: transparent;
+}
+
+entry {
+    text-color: @fg-color;
+    background-color: transparent;
+    placeholder: "Password...";
+    placeholder-color: @fgp-color;
+}
+
+/*** LISTVIEW ***/
+listview {
+    columns: 1;
+    lines: 7;
+    fixed-height: true;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    border: 0px solid;
+    background-color: transparent;
+}
+
+/*** ELEMENTS ***/
+element {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    border: 0px solid;
+    border-radius: @b-radius;
+    border-color: @b-color;
+    background-color: transparent;
+    text-color: @fg-color;
+    cursor: pointer;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @fg-color;
+}
+
+element alternate.normal {
+    background-color: @alt-color;
+    text-color: @fg-color;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @hl-color;
+    text-color: @hlt-color;
+}
+
+/*** MESSAGE BAR (optional) ***/
+message {
+    background-color: transparent;
+    text-color: @fg-color;
+    border: 0px;
+}

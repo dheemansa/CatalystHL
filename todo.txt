@@ -1,10 +1,18 @@
 pacman 
-install hyprland kitty waybar firefox sddm(and enable sddm)
+install hyprland kitty waybar sddm(and enable sddm)
 pamixer brightnessctl dunst 
 pacman-contrib 
+flameshot
+pipewire wireplumber pavucontrol
+xdg-desktop-portal-hyprland
+loupe
+hyprlock hypridle
+jq imagemagick
+
 
 paru 
 tela-circle-icon-theme-dracula
+hyprshot
 
 
 install font
@@ -14,3 +22,25 @@ fc-cache -fv
 install bluetooth 
 bluez bluez-utils blueman
 systemctl enable services.bluetooth
+
+
+update drivers
+sudo pacman -S reflector 
+sudo reflector --protocol https --sort rate --latest 100 --number 15 --save /etc/pacman.d/mirrorlist
+
+
+
+remove some config settings from kitty 
+
+
+
+fix vscode/codium/code titlebar(i.e remove close buttons ...)
+.config/code-oss(or vscode or vscodium)/user/settings.ini
+{
+  "window.titleBarStyle": "native",
+  "window.menuBarVisibility": "compact",
+  "window.menuBarStyle": "custom",
+  "window.enableWayland": true
+}
+
+
