@@ -1,0 +1,53 @@
+@import "../colors.rasi"
+@import "../global.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 16";
+}
+
+/*** WINDOW ***/
+window {
+    width: 900px;
+    border-radius: @b-radius;
+    background-color: @theme-background;
+    border: @w-border;
+    border-color: @theme-window-border;
+    padding: @w-padding;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+}
+
+/*** MAIN LAYOUT ***/
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: 20px 8px 8px 20px;
+    padding: @g-padding;
+    valigh: center;
+    children: ["inputbar"];
+}
+
+/*** INPUT BAR ***/
+inputbar {
+    spacing: 10px;
+    padding: 8px;
+    text-color: @theme-fg-primary;
+    background-color: @theme-fg-highlight-color;
+    border-radius: @b-radius;
+    children: ["prompt", "entry"];
+}
+
+prompt {
+    text-color: @theme-fg-secondary;
+    background-color: transparent;
+}
+
+entry {
+    text-color: @theme-fg-primary;
+    background-color: transparent;
+    placeholder: "Password...";
+    placeholder-color: @theme-fg-secondary;
+    cursor: text;
+}
+

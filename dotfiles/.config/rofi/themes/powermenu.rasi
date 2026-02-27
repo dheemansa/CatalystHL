@@ -1,0 +1,132 @@
+
+/*
+
+window {
+    width: 100%;
+}
+
+listview {
+    columns: 5;
+    rows: 4;              // how many icons visible at once
+    spacing: 20px;
+    cycle: true;
+    layout: horizontal;      // scroll left/right
+    dynamic: true;           // allow scrolling
+    fixed-height: true;      // keeps only one row
+}
+element {
+    orientation: vertical;     // icon above, text below
+    spacing: 5px;
+    border: 0px;
+    background-color: transparent;
+}
+
+element-icon {
+    size: 192px;               // big thumbnails
+}
+
+element-text {
+    horizontal-align: 0.5;     // center under icon
+}
+*/
+
+@import "../colors.rasi"
+@import "../global.rasi"
+
+* {
+    separatorcolor:     transparent;
+    border-color:       transparent;
+    font:               "JetBrainsMono Nerd Font 40";
+}
+
+configuration {
+    show-icons:                  false;
+}
+
+//----- Main Window -----//
+
+window {
+    enabled:                     true;
+    fullscreen:                  false;
+    width:                       80%;
+    //height:                      40%;
+    transparency:                "real";
+    cursor:                      "default";
+    spacing:                     0px;
+    padding:                     0px;
+    border:                      @w-border;
+    border-radius:               @b-radius;
+    border-color:                @theme-window-border;
+    background-color:            transparent;
+}
+
+//----- Main Box -----//
+
+mainbox {
+    enabled:                     true;
+    children:                    [ "listview" ];
+    background-color:            @theme-background;
+}
+
+//----- Listview -----//
+
+listview {
+    enabled:                     true;
+    columns:                     5;
+    lines:                       1;
+    flow: horizontal;
+    //spacing:                     50px;
+    //padding:                     05px;
+    cycle:                       false;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    cursor:                      "default";
+    background-color:            transparent;
+    text-color:                  @theme-fg-primary;
+}
+
+
+//----- Elements -----//
+
+element {
+    enabled:                     true;
+    orientation:                 vertical;
+    spacing:                     0px;
+    padding:                     50px;
+    border-radius:               20px;
+    cursor:                      pointer;
+    background-color:            transparent;
+    text-color:                  @theme-fg-primary;
+}
+
+element selected.normal {
+    background-color:            @theme-highlight-color;
+    text-color:                  @theme-fg-highlight-color;
+}
+
+
+element-text {
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    padding:                     20px;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+}
+
+
+//----- Inputbar -----//
+
+inputbar {
+    enabled:                     false;
+}
+
+//----- Dummy Box -----//
+
+dummy {
+    background-color:            transparent;
+}

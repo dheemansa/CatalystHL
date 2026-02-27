@@ -1,0 +1,12 @@
+@define-color main-bg rgba(8, 7, 13, 0.3);
+@define-color bar-bg rgba(8, 7, 13, 0.0);
+@define-color main-fg rgba(221, 188, 214, 1.0);
+@define-color active-bg rgba(192, 140, 184, 0.9);
+@define-color accent-primary rgba(192, 140, 184, 1.0);
+@define-color accent-secondary rgba(157, 112, 152, 1.0);
+@define-color active-fg rgba(8, 7, 13, 1.0);
+@define-color hover-bg rgba(36, 38, 60, 0.5);
+@define-color hover-fg rgba(221, 188, 214, 1.0);
+@define-color success-color rgba(136, 227, 128, 1.0);
+@define-color error-color rgba(255, 146, 176, 1.0);
+@define-color warning-color rgba(250, 179, 135, 1.0);

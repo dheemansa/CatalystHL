@@ -1,0 +1,9 @@
+* {
+    theme-element-border:          #000000FF; //element border color
+    theme-window-border:           #ffffffff;   
+    theme-fg-primary:              #FFFFFFFF; //for text
+    theme-fg-secondary:            #888888FF; //for placeholder text
+    theme-background:              #00000066;
+    theme-highlight-color:         #FFFFFFFF; //selected option color
+    theme-fg-highlight-color:      #000000FF; //selected option text color 
+}

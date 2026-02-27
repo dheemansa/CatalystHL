@@ -1,0 +1,103 @@
+# Global settings for Luminol
+[global]
+wallpaper-command = "swww img {wallpaper_path} --transition-type wipe --transition-fps 60 --transition-step 60"
+theme-type = "dark"
+reload-commands = [
+  "dunstctl close",
+  "dunstctl reload",
+  "notify-send heyy",
+  "hyprctl reload",
+]
+# Default: false
+use-shell = true # (Optional) Set to true to execute reload-commands using the system shell.
+# If true, stdout and stderr from reload commands will be sent to a log file.
+log-output = false
+tty-reload = true
+terminal-color-style = "pywal"
+
+
+# Hyprland: Using remap-colors with transformations
+[hyprland]
+color-format = "hex6value"
+output-file = "~/.config/hypr/colors.conf"
+syntax = "${name} = rgb({color})"
+remap-colors = true
+
+[hyprland.colors]
+active_border = { source = "border-active" }
+inactive_border = { source = "border-inactive" }
+
+
+# Rofi: Default mode, no remapping
+[rofi]
+color-format = "hex8"
+output-file = "~/.config/rofi/colors.rasi"
+syntax = "*{{name}: {color};}"
+remap-colors = true
+
+[rofi.colors]
+theme-element-border = { source = "border-inactive" }
+theme-window-border = { source = "border-active" }
+theme-fg-primary = { source = "text-primary" }
+theme-fg-secondary = { source = "text-secondary" }
+theme-background = { source = "bg-primary", opacity = 0.6 }
+theme-highlight-color = { source = "bg-tertiary" }
+theme-fg-highlight-color = { source = "text-tertiary" }
+
+[waybar]
+color-format = "rgba"
+output-file = "~/.config/waybar/colors.css"
+syntax = "@define-color {name} {color};"
+remap-colors = true
+
+[waybar.colors]
+main-bg = { source = "bg-primary", opacity = 0.3 }
+bar-bg = { source = "bg-primary", opacity = 0 }
+main-fg = { source = "text-primary" }
+active-bg = { source = "bg-tertiary", opacity = 0.9 }
+accent-primary = { source = "accent-primary" }
+accent-secondary = { source = "accent-secondary" }
+active-fg = { source = "text-tertiary" }
+hover-bg = { source = "bg-secondary", opacity = 0.5 }
+hover-fg = { source = "text-secondary" }
+success-color = { source = "success-color", saturation = 1.5 }
+error-color = { source = "error-color", brightness = 1.5 }
+warning-color = { source = "warning-color" }
+
+# Dunst: Using a template with placeholders
+[dunst]
+enabled = true
+color-format = "hex8"
+output-file = "~/.config/dunst/dunstrc"
+syntax = "{placeholder}"                      # This indicates template mode
+template = "~/.config/dunst/dunstrc.template"
+
+[dunst.colors]
+accent-primary = { source = "accent-primary", opacity = 0.8 }
+text-primary = { source = "text-primary" }
+bg-primary = { source = "bg-primary" }
+
+[starship]
+color-format = "hex6"
+output-file = "~/.config/starship/starship.toml"
+template = "~/.config/starship/starship_template.toml"
+syntax = "{placeholder}"
+remap-colors = true
+
+[starship.colors]
+accent = { source = "accent-primary" }
+accent-secondary = { source = "accent-secondary" }
+on-accent = { source = "text-tertiary" }
+
+[gtk3]
+color-format = "hex6"
+output-file = "~/.config/gtk-3.0/gtk_colors.css"
+syntax = " @define-color {name} {color};"
+remap-colors = true
+
+[gtk3.colors]
+accent = { source = "accent-primary" }
+text = { source = "text-primary" }
+crust = { source = "text-tertiary" }
+base = { source = "bg-primary" }
+surface_0 = { source = "bg-secondary" }

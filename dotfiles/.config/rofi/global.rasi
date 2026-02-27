@@ -1,0 +1,98 @@
+* {
+    font: "JetBrainsMono Nerd Font 13";
+    g-spacing: 10px;
+    g-margin: 0;
+    b-radius: 8px;
+    g-padding: 8px;
+    w-border: 2px solid;
+    w-padding: 12px;
+    background-color: transparent;
+}
+
+element-text {
+    highlight: inherit;
+    text-color: inherit;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 1.0000em;
+    cursor: inherit;
+    text-color: inherit;
+}
+
+listview {
+    columns: 1;
+    lines: 7;
+    fixed-height: false;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    border: 0px solid;
+}
+
+window {
+    border-radius: @b-radius;
+    background-color: @theme-background;
+    border: @w-border;
+    border-color: @theme-window-border;
+    padding: @w-padding;
+}
+
+prompt {
+    text-color: @theme-fg-primary;
+}
+
+inputbar {
+    children: ["prompt", "entry"];
+    spacing: @g-spacing;
+}
+
+entry {
+    placeholder: "Search Apps";
+    text-color: @theme-fg-primary;
+    placeholder-color: @theme-fg-secondary;
+}
+
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    children: ["inputbar", "listview", "message"];
+}
+
+element {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    border: 0px solid;
+    border-radius: @b-radius;
+    border-color: @theme-element-border;
+    text-color: @theme-fg-primary;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @theme-fg-primary;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @theme-fg-primary;
+}
+
+element selected.active {
+    background-color: @theme-highlight-color;
+    text-color: @theme-fg-highlight-color;
+}
+
+element selected.normal {
+    background-color: @theme-highlight-color;
+    text-color: @theme-fg-highlight-color;
+}
+
+message {
+    background-color: transparent;
+    border: 0px solid;
+    text-color: @theme-fg-primary;
+}

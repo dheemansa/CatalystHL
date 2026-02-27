@@ -1,0 +1,264 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Configures the format of the prompt.
+format = """
+[](mono0)\
+$os\
+[ ](mono0)\
+[](accent)\
+$username\
+[](bg:accent-secondary fg:accent)\
+$directory\
+[](fg:accent-secondary bg:color_yellow)\
+$git_branch\
+$git_status\
+[](fg:color_yellow)\
+$fill\
+$c\
+$dotnet\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+$elixir\
+$elm\
+$gradle\
+$julia\
+$nim\
+$scala\
+$docker_context\
+$time\
+$line_break$character"""
+
+
+scan_timeout = 50
+
+# Sets the palette to "one_dark".
+# palette = 'one_dark'
+palette = 'ansi'
+
+# Sets the colors of the "one_dark" palette.
+[palettes.one_dark]
+mono0 = '#d7dae0'         # terminal white, from the One Dark Pro VSCode theme.
+mono1 = '#abb2bf'         # syntax_fg.
+mono2 = '#828997'
+mono3 = '#5c6370'
+mono4 = '#3f4451'         # terminal black, from the One Dark Pro VSCode theme.
+color_red0 = '#e06c75'
+color_red1 = '#be5046'
+color_green = '#98c379'
+color_yellow = '#e5c07b'
+color_blue = '#61afef'
+color_purple = '#c678dd'
+color_cyan = '#56b6c2'
+color_orange = '#d19a66'
+syntax_fg = '#abb2bf'
+syntax_bg = '#282c34'
+color_bg2 = '#665c54'
+syntax_gutter = '#647382'
+syntax_accent = '#528cff'
+
+[palettes.ansi]
+accent = '{accent}'
+accent-secondary = '{accent-secondary}'
+on-accent = '{on-accent}'
+mono0 = 'white'                         # or 'bright-black' for gray
+mono1 = 'bright-white'
+mono2 = 'bright-black'
+mono3 = 'bright-black'
+mono4 = 'black'
+color_red0 = 'red'
+color_red1 = 'bright-red'
+color_green = 'green'
+color_yellow = 'yellow'
+color_blue = 'blue'
+color_purple = 'magenta'
+color_cyan = 'cyan'
+color_orange = 'yellow'                 # ANSI doesn't have orange, use yellow
+syntax_fg = 'bright-white'
+syntax_bg = 'black'
+color_bg2 = 'bright-black'
+syntax_gutter = 'bright-black'
+syntax_accent = 'bright-blue'
+
+# Module that displays the current OS.
+[os]
+disabled = false                # Disabled by default
+style = "bg:mono0 fg:syntax_bg"
+format = '[ $symbol ]($style)'
+
+# Sets custom symbols for each OS.
+[os.symbols]
+Alpine = ""
+Amazon = ""
+Android = "󰀲"
+Arch = ""
+CentOS = ""
+Debian = "󰣚"
+EndeavourOS = ""
+Fedora = "󰣛"
+FreeBSD = "󰣠"
+Gentoo = "󰣨"
+Illumos = ""
+Linux = "󰌽"
+Macos = "󰀵"
+Manjaro = "󱘊"
+Mint = "󰣭"
+NixOS = "󱄅"
+OpenBSD = ""
+openSUSE = ""
+Pop = ""
+Raspbian = ""
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Redox = "R"
+Solus = ""
+SUSE = ""
+Ubuntu = "󰕈"
+Unknown = ""
+Windows = "󰍲"
+
+# Module that displays the current username.
+[username]
+show_always = true
+style_user = "bold bg:accent fg:on-accent"
+style_root = "bold italic bg:color_red0 fg:syntax_bg"
+format = '[ $user ]($style)'
+
+# Module that displays the current directory.
+[directory]
+style = "bold italic fg:on-accent bg:accent-secondary"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Sets the custom symbols for directories.
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+# Module that displays the current git branch.
+[git_branch]
+symbol = ""
+style = "bg:color_yellow"
+format = '[[ $symbol $branch ](fg:syntax_bg bg:color_yellow)]($style)'
+
+# Module that displays the current git status.
+[git_status]
+style = "bg:color_green"
+format = '[[($all_status$ahead_behind )](fg:syntax_bg bg:color_yellow)]($style)'
+
+# Language specific modules
+[nodejs]
+symbol = ""
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[c]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[dotnet]
+symbol = "󰪮"
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[php]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[java]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[kotlin]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[python]
+symbol = " "
+style = "fg:color_green"
+format = '[ $symbol($version)( \($virtualenv\)) ]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[elm]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[gradle]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[julia]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[nim]
+symbol = "󰆥 "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+[scala]
+symbol = " "
+style = "bg:color_green"
+format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+
+# Module that displays the docker context.
+[docker_context]
+symbol = " "
+style = "bg:mono3"
+format = '[[ $symbol( $context) ](fg:syntax_fg bg:mono3)]($style)'
+
+# Module that fills the space between the left and right segments.
+[fill]
+symbol = " "
+
+# Module that displays the time.
+[time]
+disabled = false             # Disabled by default
+style = "bold fg:syntax_fg"
+format = "[󱑈 $time]($style)"
+time_format = "%H:%M"
+
+
+# New line character
+[character]
+success_symbol = '[➜](bold fg:syntax_accent)'
+error_symbol = '[➜](bold fg:color_red1)'
+vimcmd_symbol = '[󰅁](bold fg:syntax_accent)'
+vimcmd_replace_one_symbol = '[󰅁](bold fg:color_purple)'
+vimcmd_replace_symbol = '[󰅁](bold fg:color_purple)'
+vimcmd_visual_symbol = '[󰅁](bold fg:color_yellow)'

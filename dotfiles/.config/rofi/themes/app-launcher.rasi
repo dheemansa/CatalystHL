@@ -1,0 +1,78 @@
+@import "../colors.rasi"
+@import "../global.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 13";
+}
+
+listview {
+    columns: 1;
+    lines: 7;
+    fixed-height: true;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: false;
+    border: 0px solid;
+}
+
+window {
+    //transparency: "real";
+    width: 450px;
+    border-radius: @b-radius;
+    background-color: @theme-background;
+    border: @w-border;
+    border-color: @theme-window-border;
+    padding: @w-padding;
+}
+
+prompt {
+    text-color: @theme-fg-primary;
+}
+
+inputbar {
+    children: ["prompt", "entry"];
+    spacing: @g-spacing;
+}
+
+entry {
+    placeholder: "Search Apps";
+    text-color: @theme-fg-primary;
+    placeholder-color: @theme-fg-secondary;
+}
+
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    children: ["inputbar", "listview", "message"];
+}
+
+element {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    border: 0px solid;
+    border-radius: @b-radius;
+    border-color: @theme-window-border;
+    background-color: transparent;
+    text-color: @theme-fg-primary;
+}
+
+//element alternate.normal,
+//element normal.normal {
+element normal{
+	background-color: transparent;
+	text-color: @theme-fg-primary;
+}
+
+//element selected.normal,
+//element selected.active {
+element selected{
+	background-color: @theme-highlight-color;
+	text-color: @theme-fg-highlight-color;
+}
+
+message {
+    background-color: transparent;
+    border: 0px solid;
+}

@@ -1,0 +1,71 @@
+@import "../colors.rasi"
+@import "../global.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 16";
+}
+
+/*** WINDOW ***/
+window {
+    width: 700px;
+    max-height: 600px;  // Add this line   //height: 300px;
+    border-radius: @b-radius;
+    background-color: @theme-background;
+    border: @w-border;
+    border-color: @theme-window-border;
+    padding: @w-padding;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+}
+
+/*** MAIN LAYOUT ***/
+mainbox {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    children: ["listview", "message"];  // ← removed inputbar
+}
+
+/*** LISTVIEW ***/
+listview {
+    columns: 1;
+    //lines: 6;
+    fixed-height: false;
+    fixed-columns: true;
+    cycle: false;
+    scrollbar: true; 
+    dynamic: true;
+    border: 0px solid;
+    background-color: transparent;
+}
+scrollbar {
+    background-color: transparent;
+    handle-color: @theme-highlight-color;
+    handle-width: 2px;
+}
+/*** ELEMENTS ***/
+element {
+    spacing: @g-spacing;
+    margin: @g-margin;
+    padding: @g-padding;
+    border: 0px solid;
+    border-radius: @b-radius;
+    border-color: @theme-window-border;
+    background-color: transparent;
+    text-color: @theme-fg-primary;
+    cursor: pointer;
+}
+
+element alternate.normal,
+element normal.normal {
+    background-color: transparent;
+    text-color: @theme-fg-primary;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @theme-highlight-color;
+    text-color: @theme-fg-highlight-color;
+}
+

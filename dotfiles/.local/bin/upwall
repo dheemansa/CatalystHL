@@ -1,0 +1,102 @@
+#!/bin/bash
+# update_wallpapers.sh
+# Unifies wallpaper JSON generation and thumbnail management into one efficient script.
+
+# --- Configuration ---
+# Use env vars if set (e.g., from Hyprland), otherwise default
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Pictures/Wallpapers}"
+CACHE_DIR="${WALLPAPER_CACHE:-$HOME/.cache/wallpaper_thumbnails}"
+WALLPAPER_JSON="$HOME/.local/share/CatalystHL/wallpaper.json"
+THUMBNAIL_SIZE="200x200"
+
+# --- Dependencies ---
+for cmd in jq magick; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "Error: '$cmd' is required but not installed." >&2
+        exit 1
+    fi
+done
+
+echo "Wallpaper Update"
+echo "Source: $WALLPAPER_DIR"
+echo "Cache:  $CACHE_DIR"
+
+# --- Step 1: Generate JSON Manifest ---
+echo -e "\n--- (1/2) Generating wallpaper.json ---"
+
+mkdir -p "$(dirname "$WALLPAPER_JSON")"
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    echo "Error: Directory not found: $WALLPAPER_DIR" >&2
+    exit 1
+fi
+
+# Find images, sort them, and structure into JSON
+# -iname makes it case-insensitive
+JSON_CONTENT=$(find "$WALLPAPER_DIR" -mindepth 2 -type f \
+    '(' -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" -o -iname "*.webp" ')' \
+    -printf '%P\n' | sort | jq -R -s '
+split("\n")
+    | map(select(length > 0))
+    | reduce .[] as $file ({};
+        .[$file | split("/")[0]] += [$file]
+      )
+')
+
+# Validate and write JSON
+if [ -n "$JSON_CONTENT" ] && echo "$JSON_CONTENT" | jq -e . >/dev/null 2>&1; then
+    echo "$JSON_CONTENT" > "$WALLPAPER_JSON"
+    echo "  Manifest updated at: $WALLPAPER_JSON"
+else
+    echo "  Error: Failed to generate valid JSON." >&2
+    exit 1
+fi
+
+# --- Step 2: Manage Thumbnails ---
+echo -e "\n--- (2/2) Managing Thumbnails ---"
+mkdir -p "$CACHE_DIR"
+
+# A. Cleanup Phase
+echo "  Cleaning up orphaned thumbnails..."
+JSON_THUMBS=$(mktemp)
+CACHE_FILES=$(mktemp)
+
+# Get expected relative paths from JSON
+jq -r '.[] | .[]' "$WALLPAPER_JSON" | sort -u > "$JSON_THUMBS"
+
+# Get relative paths of existing thumbnails in cache
+# We cd into CACHE_DIR so find returns paths relative to it (e.g. folder1/img.png)
+(cd "$CACHE_DIR" && find . -type f -not -path '*/.*' -printf "%P\n") | sort > "$CACHE_FILES"
+
+# Delete thumbnails that are in Cache but NOT in JSON
+comm -13 "$JSON_THUMBS" "$CACHE_FILES" | while read -r thumb_to_delete; do
+    echo "  Deleting: $thumb_to_delete"
+    rm -f "$CACHE_DIR/$thumb_to_delete"
+    # Try to remove empty parent directories
+    rmdir --ignore-fail-on-non-empty "$(dirname "$CACHE_DIR/$thumb_to_delete")" 2>/dev/null || true
+done
+rm "$JSON_THUMBS" "$CACHE_FILES"
+
+# B. Creation Phase (Sequential)
+echo "  Checking for missing thumbnails..."
+
+jq -r '.[] | .[]' "$WALLPAPER_JSON" | while read -r rel_path; do
+    thumb_path="$CACHE_DIR/$rel_path"
+    thumb_dir=$(dirname "$thumb_path")
+    
+    # Only generate if the thumbnail DOES NOT EXIST
+    if [ ! -f "$thumb_path" ]; then
+        full_path="$WALLPAPER_DIR/$rel_path"
+        
+        # Ensure subfolder exists in cache
+        mkdir -p "$thumb_dir"
+        
+        if [ -f "$full_path" ]; then
+            echo "  Creating thumbnail: $rel_path"
+            magick "$full_path" -thumbnail "${THUMBNAIL_SIZE}^" -gravity center -extent "$THUMBNAIL_SIZE" "$thumb_path"
+        fi
+    fi
+done
+
+echo -e "\n  Update Complete."
+notify-send -i "wallpaper" "Wallpaper System" "Manifest and thumbnails updated."

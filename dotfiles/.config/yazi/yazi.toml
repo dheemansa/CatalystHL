@@ -1,0 +1,9 @@
+[mgr]
+show_hidden = true
+ratio = [2, 3, 3]
+show_symlink = true
+
+
+[preview]
+max_width = 3000
+max_height = 3000

@@ -1,0 +1,79 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+    "logo": "none",
+    "display": {
+        "separator": " "
+    },
+    "modules": [
+
+        {
+            "type": "command",
+            "text": "figlet -f slant -w 200 -k \"CatalystHL\"",   // Command to generate ASCII logo
+            "key": " ",                                         // Hide the key so only logo appears
+            "outputColor": "97",                                // Color of the ASCII logo
+            "format": "{result}",                               // Print command output as-is
+        },
+        {
+            "type": "custom",
+            "format": "  ╭───────────╮",
+            "outputColor": "97"
+        },
+        {
+            "type": "title",
+            "key": "  │ \u001b[31m\u001b[0m  user   │",
+            "format": "{1}",
+            "keyColor": "97",
+        },
+        {
+            "type": "os",
+            "key": "  │ \u001b[32m\u001b[0m  distro │",
+            "format": "{3}",
+            "keyColor": "97",
+        },
+        {
+            "type": "kernel",
+            "key": "  │ \u001b[33m\u001b[0m  kernel │",
+            "keyColor": "97",
+        },
+        {
+            "type": "wm",
+            "key": "  │ \u001b[34m\u001b[0m  wm     │",
+            "keyColor": "97",
+        },
+        {
+            "type": "uptime",
+            "key": "  │ \u001b[35m\u001b[0m  uptime │",
+            "format": "{?1}{1}d {?}{?2}{2}h {?}{?3}{3}m{?}",
+            "keyColor": "97",
+        },
+        {
+            "type": "shell",
+            "key": "  │ \u001b[36m\u001b[0m  shell  │",
+            "format": "{1}",
+            "keyColor": "97",
+        },
+        {
+            "type": "packages",
+            "key": "  │ \u001b[31m\u001b[0m  pkgs   │",
+            "format": "{}",
+            "keyColor": "97",
+        },
+        {
+            "type": "memory",
+            "key": "  │ \u001b[32m\u001b[0m  memory │",
+            "format": "{1} | {2} MiB",
+            "keyColor": "97",
+        },
+        {
+            "type": "custom",
+            "format": "  ├───────────┤",
+            "outputColor": "97"
+        },
+        {
+            "type": "custom",
+            "key": "  │ \u001b[34m\u001b[0m  colors │",
+            "format": "\u001b[30m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m  \u001b[0m \n\u001b[0m  ╰───────────╯",
+            "keyColor": "97",
+        }
+    ]
+}

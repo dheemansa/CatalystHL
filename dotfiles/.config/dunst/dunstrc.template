@@ -1,0 +1,62 @@
+[global]
+monitor = 0
+follow = mouse
+shrink = no
+padding = 12
+horizontal_padding = 12
+
+width = 400
+height = (70, 500)
+offset = (16,60)
+origin = top-right
+
+frame_width = 2
+separator_height = 2
+frame_color = "{accent-primary}"
+separator_color = frame
+gap_size = 10
+
+sort = no
+font = JetBrainsMono Nerd Font 13
+markup = full
+format = "<b>%s</b>\n%b"
+alignment = left
+show_age_threshold = 60
+word_wrap = yes
+ignore_newline = no
+stack_duplicates = no
+hide_duplicate_count = no
+show_indicators = yes
+
+icon_position = left
+max_icon_size = 60
+sticky_history = no
+history_length = 6
+corner_radius = 8
+
+mouse_left_click = do_action,close_current
+mouse_middle_click = close_current
+mouse_right_click = close_all
+
+#mouse_left_click = close_current
+#mouse_middle_click = do_action
+#mouse_right_click = close_all
+
+[urgency_low]
+background = "{bg-primary}"
+foreground = "{text-primary}"
+frame_color = "{accent-primary}"
+timeout = 5
+
+[urgency_normal]
+default_icon = dialog-information
+background = "{bg-primary}"
+foreground = "{text-primary}"
+frame_color = "{accent-primary}"
+timeout = 5
+
+[urgency_critical]
+background = "#1111118A"      # alt-color rgba(17,17,17,0.54)
+foreground = "#FFFFFFFF"
+frame_color = "#FFFFFFFF"
+timeout = 10

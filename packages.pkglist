@@ -1,0 +1,96 @@
+# -----------------------------------------------------------------------------
+# packages.pkglist
+#
+# A master list of all packages to be installed on the system.
+# This list is used by the install.sh script, which will use an AUR helper
+# to install packages from both the official repositories and the AUR.
+# -----------------------------------------------------------------------------
+
+# --- Core System & Setup ---
+base-devel
+git
+stow
+reflector
+tree
+polkit
+networkmanager
+
+# --- Hyprland & Wayland ---
+hyprland
+hypridle
+hyprlock
+hyprutils
+xdg-desktop-portal
+xdg-desktop-portal-hyprland
+wl-clipboard 
+
+
+# --- Screenshot ---
+slurp
+grim
+
+# --- Audio ---
+pipewire
+pipewire-pulse
+pipewire-alsa
+pipewire-jack
+wireplumber
+pavucontrol
+pamixer
+
+# --- SDDM (Login Manager) ---
+sddm
+qt6-svg
+qt6-virtualkeyboard
+qt6-multimedia-ffmpeg
+
+# --- Shell & Terminal ---
+alacritty
+kitty
+fish
+starship
+fzf
+zoxide
+fastfetch
+figlet
+
+# --- File Management ---
+nemo
+nemo-fileroller
+yazi
+zip
+unzip
+
+# --- Development & Code ---
+jq
+inotify-tools
+pyenv
+
+# --- UI Components & Apps ---
+rofi
+waybar
+dunst
+nwg-look 
+loupe
+brightnessctl
+imagemagick
+btop
+zen-browser
+blueberry 
+
+# --- Themes & Icons ---
+adw-gtk-theme
+papirus-icon-theme
+
+# --- Fonts ---
+inter-font
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd 
+otf-geist-mono-nerd 
+
+# --- Wallpaper Management ---
+swww
+hyprpolkitagent 
+
+# --- System Monitoring ---
+lm_sensors

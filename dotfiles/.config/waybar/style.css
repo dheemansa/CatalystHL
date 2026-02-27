@@ -1,0 +1,224 @@
+@import "./colors.css";
+/* @define-color main-bg rgba(17, 17, 17, 0.3); */
+/* @define-color bar-bg rgba(30, 30, 46, 0); */
+/* @define-color main-fg rgba(180, 190, 254, 1); */
+/* @define-color active-bg rgba(180, 190, 254, 0.9); */
+/* @define-color active-fg rgba(0, 0, 0, 0.7); */
+/* @define-color hover-bg rgba(75, 75, 125, 0.4); */
+/* @define-color hover-fg rgba(174, 170, 240, 0.8); */
+
+@define-color success-color #a6e3a1;
+/* @define-color error-color #f38ba8; */
+@define-color warning-color #fab387;
+/* @define-color cpu-color #89b4fa; */
+/* @define-color memory-color #cba6f7; */
+
+@define-color cpu-color @main-fg;
+@define-color memory-color @main-fg;
+@define-color disconnected-color #bcbfcc;
+@define-color disabled-color @accent-secondary;
+@define-color accent @accent-secondary;
+@define-color bluetooth-color #89b4fa;
+@define-color warm-temp-color #f9e2af;
+
+* {
+    border: none;
+    border-radius: 0px;
+    font-family: "JetBrainsMono Nerd Font Propo";
+    font-weight: bold;
+    font-size: 12px;
+    min-height: 10px;
+}
+
+window#waybar {
+    background: @bar-bg;
+    border-radius: 15px;
+}
+
+tooltip {
+    background: @main-bg;
+    color: @main-fg;
+    border-radius: 7px;
+}
+
+#workspaces button,
+#workspaces button.active,
+#idle_inhibitor,
+#network,
+#pulseaudio,
+#custom-do-not-disturb,
+#bluetooth,
+#custom-cpu-temp,
+#battery {
+    transition: all 0.3s ease;
+}
+
+#workspaces,
+#clock,
+#idle_inhibitor,
+#custom-l_end,
+#custom-r_end,
+#system-levels,
+#system-info,
+#control-panel,
+#custom-padd_bg {
+    background: @main-bg;
+    color: @main-fg;
+    margin: 4px 0;
+    padding: 0 4px;
+}
+
+#workspaces {
+    padding: 0;
+}
+
+#workspaces button {
+    box-shadow: none;
+    text-shadow: none;
+    padding: 0 3px;
+    margin: 3px 0;
+    border-radius: 9px;
+    color: @main-fg;
+}
+
+#workspaces button.active {
+    background: @active-bg;
+    color: @active-fg;
+    margin: 3px;
+    padding: 0 12px;
+}
+
+#workspaces button:hover {
+    background: @hover-bg;
+    color: @hover-fg;
+}
+
+#tray menu * {
+    min-height: 16px;
+}
+
+#tray menu separator {
+    min-height: 10px;
+}
+
+#system-levels,
+#system-info,
+#control-panel {
+    border-radius: 20px;
+    padding: 0 20px;
+}
+
+#custom-l_end {
+    border-radius: 21px 0 0 21px;
+    margin-left: 9px;
+    padding-left: 3px;
+}
+
+#custom-r_end {
+    border-radius: 0 21px 21px 0;
+    margin-right: 9px;
+    padding-right: 3px;
+}
+
+#cpu,
+#custom-cpu-temp {
+    padding: 0 5px;
+    color: @cpu-color;
+}
+
+#custom-cpu-temp.warm {
+    color: @warm-temp-color;
+}
+
+#custom-cpu-temp.hot {
+    color: @error-color;
+}
+
+#custom-cpu-temp.cool {
+    /* color: @success-color; */
+    color: @cpu-color;
+}
+
+#memory {
+    padding: 0 5px;
+    color: @memory-color;
+}
+
+#backlight {
+    color: @cpu-color;
+}
+
+#battery.charging,
+#battery.plugged {
+    /* color: @warm-temp-color; */
+    color: @main-fg;
+}
+
+#battery.discharging.critical {
+    color: @error-color;
+}
+
+#battery.discharging.warning {
+    color: @warning-color;
+}
+
+#battery.discharging.good {
+    color: @success-color;
+}
+
+#network {
+    /* color: @success-color; */
+    color: @main-fg;
+}
+
+#network.disabled {
+    /* color: @error-color; */
+    color: @accent-secondary;
+}
+
+#network.disconnected {
+    color: @disconnected-color;
+}
+
+#pulseaudio.output,
+#pulseaudio.input {
+    /* color: @success-color; */
+    color: @main-fg;
+}
+
+#pulseaudio.input.source-muted,
+#pulseaudio.output.muted {
+    /* color: @error-color; */
+    /* color: @main-fg; */
+    color: @accent;
+}
+
+#custom-do-not-disturb.dnd-on {
+    /* color: @success-color; */
+    /* color: @disconnected-color; */
+    color: @main-fg;
+}
+
+#custom-do-not-disturb.dnd-off {
+    color: @disabled-color;
+}
+
+#bluetooth {
+    /* for disabled */
+    color: @disabled-color;
+}
+
+#bluetooth.on {
+    color: @disconnected-color;
+}
+
+#bluetooth.connected,
+#bluetooth.connected-battery {
+    color: @bluetooth-color;
+}
+
+#custom-power {
+    /* color: @error-color; */
+    /* color: @main-fg; */
+    color: @accent-secondary;
+}

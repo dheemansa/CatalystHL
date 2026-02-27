@@ -1,0 +1,7 @@
+*{theme-element-border: #8d7a8aff;}
+*{theme-window-border: #c08cb8ff;}
+*{theme-fg-primary: #ddbcd6ff;}
+*{theme-fg-secondary: #ddbcd6ff;}
+*{theme-background: #08070d99;}
+*{theme-highlight-color: #c08cb8ff;}
+*{theme-fg-highlight-color: #08070dff;}

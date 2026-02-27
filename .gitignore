@@ -1,0 +1,5 @@
+# Other ignored files
+/dotfiles/.local/share/CatalystHL/wallpaper.json
+/dotfiles/.local/share/CatalystHL/current-wallpaper
+/dotfiles/.config/fish/fish_variables
+/dotfiles/.config/gtk-3.0/bookmarks
