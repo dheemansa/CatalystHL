@@ -1,0 +1,4 @@
+Credits: https://github.com/cebem1nt/dotfiles
+
+A massive thank you and deep gratitude to cebem1nt for their incredible dotfiles! 
+This swaync setup wouldn't be possible without your fantastic work.

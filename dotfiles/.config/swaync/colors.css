@@ -1,0 +1,13 @@
+@define-color bg-primary #08070d;
+@define-color bg-secondary #24263c;
+@define-color bg-tertiary #c08cb8;
+@define-color text-primary #ddbcd6;
+@define-color text-secondary #ddbcd6;
+@define-color text-tertiary #08070d;
+@define-color accent-primary #c08cb8;
+@define-color accent-secondary #9d7098;
+@define-color border-active #c08cb8;
+@define-color border-inactive #8d7a8a;
+@define-color error-color #f38ba8;
+@define-color warning-color #fab387;
+@define-color success-color #a6e3a1;

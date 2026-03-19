@@ -15,7 +15,8 @@
         "hyprland/workspaces",
         "custom/r_end",
     ],
-    "modules-center": ["custom/l_end", "idle_inhibitor", "clock", "custom/r_end"],
+    // "modules-center": ["custom/l_end", "idle_inhibitor", "clock", "custom/r_end"],
+    "modules-center": ["custom/l_end", "clock", "custom/r_end"],
     "modules-right": ["group/system-levels", "custom/padd", "group/control-panel", "custom/padd"],
 
     "group/system-info": {
@@ -145,6 +146,7 @@
         "return-type": "json",
         "interval": 5,
         "on-click": "sh ~/.config/waybar/scripts/dnd.sh toggle",
+        "on-click-right": "swaync-client -t",
         "tooltip": true,
         "format": "{}",
         "signal": 8,
@@ -212,8 +214,7 @@
         "scroll-step": 1,
         "smooth-scrolling-threshold": 1,
         "max-volume": 100,
-        //"on-click": "pamixer --default-source -t",
-        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle", // this retain the mute/unmute state even after logout
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle", // this retains the mute/unmute state even after logout
         "on-click-middle": "pavucontrol",
         "on-scroll-up": "pamixer --default-source -i 2",
         "on-scroll-down": "pamixer --default-source -d 2",

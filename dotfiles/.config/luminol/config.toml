@@ -1,13 +1,8 @@
 # Global settings for Luminol
 [global]
-wallpaper-command = "swww img {wallpaper_path} --transition-type wipe --transition-fps 60 --transition-step 60"
+wallpaper-command = "swww img {wallpaper_path} --transition-type wipe --transition-fps 60 --transition-step 60 ; ln -sf {wallpaper_path} /home/dheeman/.local/share/CatalystHL/current-wallpaper"
 theme-type = "dark"
-reload-commands = [
-  "dunstctl close",
-  "dunstctl reload",
-  "notify-send heyy",
-  "hyprctl reload",
-]
+reload-commands = ["swaync-client -rs", "notify-send heyy", "hyprctl reload"]
 # Default: false
 use-shell = true # (Optional) Set to true to execute reload-commands using the system shell.
 # If true, stdout and stderr from reload commands will be sent to a log file.
@@ -51,10 +46,10 @@ syntax = "@define-color {name} {color};"
 remap-colors = true
 
 [waybar.colors]
-main-bg = { source = "bg-primary", opacity = 0.3 }
+main-bg = { source = "bg-primary", opacity = 0.5 }
 bar-bg = { source = "bg-primary", opacity = 0 }
 main-fg = { source = "text-primary" }
-active-bg = { source = "bg-tertiary", opacity = 0.9 }
+active-bg = { source = "bg-tertiary", opacity = 1 }
 accent-primary = { source = "accent-primary" }
 accent-secondary = { source = "accent-secondary" }
 active-fg = { source = "text-tertiary" }
@@ -64,18 +59,11 @@ success-color = { source = "success-color", saturation = 1.5 }
 error-color = { source = "error-color", brightness = 1.5 }
 warning-color = { source = "warning-color" }
 
-# Dunst: Using a template with placeholders
-[dunst]
+[swaync]
 enabled = true
-color-format = "hex8"
-output-file = "~/.config/dunst/dunstrc"
-syntax = "{placeholder}"                      # This indicates template mode
-template = "~/.config/dunst/dunstrc.template"
-
-[dunst.colors]
-accent-primary = { source = "accent-primary", opacity = 0.8 }
-text-primary = { source = "text-primary" }
-bg-primary = { source = "bg-primary" }
+color-format = "hex6"
+output-file = "~/.config/swaync/colors.css"
+syntax = "@define-color {name} {color};"
 
 [starship]
 color-format = "hex6"

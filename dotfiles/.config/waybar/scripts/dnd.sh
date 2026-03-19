@@ -5,26 +5,27 @@ DND_ON_ICON="󱅫"
 DND_OFF_ICON="󱏧"
 
 # Function to check if dunst is paused
-is_dunst_paused() {
-    dunstctl is-paused | grep -q "true"
+is_notification_paused() {
+    swaync-client --get-dnd | grep -q "true"
 }
 
 # Function to pause dunst
-pause_dunst() {
+pause_notification() {
     #notify-send -u low "Do Not Disturb" "Notifications paused" 2>/dev/null || true
     #sleep 5
-    dunstctl set-paused true
+    swaync-client --dnd-on
+    
 }
 
 # Function to unpause dunst
-unpause_dunst() {
-    dunstctl set-paused false
+unpause_notification() {
+    swaync-client --dnd-off
     notify-send -u low "Do Not Disturb" "Notifications resumed" 2>/dev/null || true
 }
 
 # Function to get status for waybar
 get_status() {
-    if is_dunst_paused; then
+    if is_notification_paused; then
         echo "{\"text\":\"$DND_OFF_ICON\",\"tooltip\":\"Do Not Disturb: OFF\",\"class\":\"dnd-off\",\"alt\":\"off\"}"
     else
         echo "{\"text\":\"$DND_ON_ICON\",\"tooltip\":\"Do Not Disturb: ON\",\"class\":\"dnd-on\",\"alt\":\"on\"}"
@@ -33,10 +34,10 @@ get_status() {
 
 # Function to toggle DND
 toggle_dnd() {
-    if is_dunst_paused; then
-        unpause_dunst
+    if is_notification_paused; then
+        unpause_notification
     else
-        pause_dunst
+        pause_notification
     fi
 }
 
@@ -46,10 +47,10 @@ case "${1:-toggle}" in
         toggle_dnd
         ;;
     "on")
-        pause_dunst
+        pause_notification
         ;;
     "off")
-        unpause_dunst
+        unpause_notification
         ;;
     "status")
         get_status

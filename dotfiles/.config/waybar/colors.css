@@ -1,7 +1,7 @@
-@define-color main-bg rgba(8, 7, 13, 0.3);
+@define-color main-bg rgba(8, 7, 13, 0.5);
 @define-color bar-bg rgba(8, 7, 13, 0.0);
 @define-color main-fg rgba(221, 188, 214, 1.0);
-@define-color active-bg rgba(192, 140, 184, 0.9);
+@define-color active-bg rgba(192, 140, 184, 1.0);
 @define-color accent-primary rgba(192, 140, 184, 1.0);
 @define-color accent-secondary rgba(157, 112, 152, 1.0);
 @define-color active-fg rgba(8, 7, 13, 1.0);
