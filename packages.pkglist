@@ -28,6 +28,7 @@ wl-clipboard
 # --- Screenshot ---
 slurp
 grim
+tesseract
 
 # --- Audio ---
 pipewire

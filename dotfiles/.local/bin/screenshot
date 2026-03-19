@@ -6,6 +6,7 @@
 MODE="monitor"
 COPY=false
 FILE=""
+SILENT=false
 
 show_help() {
   cat <<EOF
@@ -17,9 +18,10 @@ Modes:
   window      Interactively select a window to capture
 
 Options:
-  -c          Copy screenshot to clipboard
-  -f <file>   Save screenshot to custom file path
-  -h, --help  Show this help message
+  -c             Copy screenshot to clipboard
+  -f <file>      Save screenshot to custom file path
+  -s, --silent   Do not send a notification
+  -h, --help     Show this help message
 EOF
 }
 
@@ -32,6 +34,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -c)
       COPY=true
+      shift
+      ;;
+    -s|--silent)
+      SILENT=true
       shift
       ;;
     -f)
@@ -63,7 +69,8 @@ GEOM=""
 case "$MODE" in
   region)
     # Interactively select an area
-    GEOM=$(slurp -b "#FFFFFF44")
+    GEOM=$(slurp -b "#0e0e1466" -c "FFFFFF80")
+
     ;;
   window)
     # Get active workspace and visible windows
@@ -71,7 +78,7 @@ case "$MODE" in
     WINDOWS=$(hyprctl clients -j | jq -r --argjson active_id "$ACTIVE_ID" '.[] | select(.hidden == false and .workspace.id == $active_id) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1]) \(.address)"')
     
     # Select window via slurp
-    SELECTED_ADDRESS=$(echo "$WINDOWS" | slurp -r -b "#FFFFFF44" -f "%l")
+    SELECTED_ADDRESS=$(echo "$WINDOWS" | slurp -r -b "#0e0e1466" -c "FFFFFF80" -f "%l")
     if [ -n "$SELECTED_ADDRESS" ]; then
       GEOM=$(hyprctl clients -j | jq -r --arg addr "$SELECTED_ADDRESS" '.[] | select(.address == $addr) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
     fi
@@ -101,7 +108,9 @@ esac
 
 # Take Screenshot
 grim -g "$GEOM" "$FILE" || { 
-    notify-send "Screenshot Failed" "Could not capture image." -u critical
+    if ! $SILENT; then
+        notify-send "Screenshot Failed" "Could not capture image." -u critical
+    fi
     exit 1 
 }
 
@@ -111,20 +120,22 @@ if $COPY; then
 fi
 
 # Notification
-MODE_DISPLAY=$(echo "$MODE" | awk '{ print toupper(substr($0,1,1)) tolower(substr($0,2)) }')
-ACTION_TEXT="Saved"
-if $COPY; then ACTION_TEXT="Saved & Copied"; fi
+if ! $SILENT; then
+    MODE_DISPLAY=$(echo "$MODE" | awk '{ print toupper(substr($0,1,1)) tolower(substr($0,2)) }')
+    ACTION_TEXT="Saved"
+    if $COPY; then ACTION_TEXT="Saved & Copied"; fi
 
-# Send notification in background to not block execution
-(
-  ACTION=$(notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE" -a Screenshot -A "default=Open" -A "delete=Delete")
-  case "$ACTION" in
-    "default")
-      xdg-open "$FILE"
-      ;;
-    "delete")
-      rm -f "$FILE"
-      notify-send "Screenshot Deleted" "Removed $(basename "$FILE")" -a Screenshot -u low
-      ;;
-  esac
-) &
+    # Send notification in background to not block execution
+    (
+      ACTION=$(notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE" -a Screenshot -A "default=Open" -A "delete=Delete")
+      case "$ACTION" in
+        "default")
+          xdg-open "$FILE"
+          ;;
+        "delete")
+          rm -f "$FILE"
+          notify-send "Screenshot Deleted" "Removed $(basename "$FILE")" -a Screenshot -u low
+          ;;
+      esac
+    ) &
+fi

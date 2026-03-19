@@ -61,7 +61,7 @@
 
                 {
                     "label": "󰀁",
-                    "command": "swaync-client -cp ; notify-send 'Screenshot OCR: Not yet implemented'"
+                    "command": "swaync-client -cp ; $HOME/.config/swaync/scripts/screenshot_ocr.sh"
                 },
 
                 {
