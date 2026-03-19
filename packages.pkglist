@@ -40,9 +40,6 @@ pamixer
 
 # --- SDDM (Login Manager) ---
 sddm
-qt6-svg
-qt6-virtualkeyboard
-qt6-multimedia-ffmpeg
 
 # --- Shell & Terminal ---
 alacritty
@@ -64,18 +61,18 @@ unzip
 # --- Development & Code ---
 jq
 inotify-tools
-pyenv
+bc
 
 # --- UI Components & Apps ---
 rofi
 waybar
-dunst
+swaync 
+libnotify
 nwg-look 
-loupe
+imv
 brightnessctl
 imagemagick
 btop
-zen-browser
 blueberry 
 
 # --- Themes & Icons ---
@@ -94,3 +91,6 @@ hyprpolkitagent
 
 # --- System Monitoring ---
 lm_sensors
+
+# ---- Media Player ------
+mpv

@@ -58,10 +58,4 @@ if status is-interactive
         echo "Failed to load luminol colors"
     end
 
-    set -Ux PYENV_ROOT $HOME/.pyenv
-    set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-
-    # Load pyenv 
-    pyenv init - fish | source
-
 end
