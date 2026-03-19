@@ -69,12 +69,13 @@ mapfile -t wallpapers < <(jq -r --arg folder "$selected_folder" '.[$folder][]' "
 gen_wallpaper_menu() {
   for rel in "${wallpapers[@]}"; do
     name=$(basename "$rel")
+    display_name="${name%.*}"
     thumb="$CACHE_DIR/$rel"
     
     if [[ -f "$thumb" ]]; then
-      echo -en "${name}\0icon\x1f${thumb}\n"
+      echo -en "${display_name}\0icon\x1f${thumb}\n"
     else
-      echo -en "${name}\n"
+      echo -en "${display_name}\n"
     fi
   done
 }
@@ -93,7 +94,8 @@ selected_file_name=$(gen_wallpaper_menu | rofi -dmenu \
 # We know the folder, so we just need to reconstruct the path or find it in the list
 chosen_rel=""
 for rel in "${wallpapers[@]}"; do
-  if [[ "$(basename "$rel")" == "$selected_file_name" ]]; then
+  filename=$(basename "$rel")
+  if [[ "${filename%.*}" == "$selected_file_name" ]]; then
     chosen_rel="$rel"
     break
   fi

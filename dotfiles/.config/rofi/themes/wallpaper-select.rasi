@@ -1,35 +1,3 @@
-
-/*
-
-window {
-    width: 100%;
-}
-
-listview {
-    columns: 5;
-    rows: 4;              // how many icons visible at once
-    spacing: 20px;
-    cycle: true;
-    layout: horizontal;      // scroll left/right
-    dynamic: true;           // allow scrolling
-    fixed-height: true;      // keeps only one row
-}
-element {
-    orientation: vertical;     // icon above, text below
-    spacing: 5px;
-    border: 0px;
-    background-color: transparent;
-}
-
-element-icon {
-    size: 192px;               // big thumbnails
-}
-
-element-text {
-    horizontal-align: 0.5;     // center under icon
-}
-*/
-
 @import "../colors.rasi"
 @import "../global.rasi"
 
@@ -40,7 +8,21 @@ element-text {
 
 configuration {
     show-icons:                  true;
+    hover-select:                true;
     font:                        "JetBrainsMono Nerd Font 13";
+
+    /* 
+     * HACK: We are using a 5x1 vertical grid to emulate a horizontal layout.
+     * Because of this, normal mouse scrolling skips 5 items at a time and 
+     * hover-select breaks on empty grid cells on the last page.
+     * 
+     * We fix this by unbinding up/down scroll and mapping the mouse 
+     * wheel directly to the horizontal left/right navigation actions.
+     */
+    ml-row-left:                 "ScrollUp";
+    ml-row-right:                "ScrollDown";
+    ml-row-up:                   "";
+    ml-row-down:                 "";
 }
 
 //----- Main Window -----//
@@ -76,7 +58,7 @@ listview {
     spacing:                     30px;
     //padding:                     20px 30px;
     padding:                     20px;
-    cycle:                       true;
+    cycle:                       false;
     dynamic:                     false;
     scrollbar:                   false;
     layout:                      vertical;
@@ -101,7 +83,7 @@ element {
     text-color:                  @theme-fg-primary;
 }
 
-element selected.normal {
+element selected {
     background-color:            @theme-highlight-color;
     text-color:                  @theme-fg-highlight-color;
 }

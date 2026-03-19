@@ -1,33 +1,25 @@
 configuration {
+    modi: "drun";
+    show-icons: true;
+    display-drun: " ";
+    icon-theme: "Tela-circle-dracula";
 
-  /* Highlight an entry under the mouse pointer */
-  hover-select: true;
-  /* Disable MousePrimary as an entry selector */
-  /* Without this setting you won't be able to set MousePrimary as an entry
-     acceptor. */
-  me-select-entry: "";
+    /* Highlight an entry under the mouse pointer */
+    hover-select: true;
+    /* Disable MousePrimary as an entry selector */
+    /* Without this setting you won't be able to set MousePrimary as an entry
+       acceptor. */
+    me-select-entry: "";
 
-  /* Use either LMB single click or RMB single click or LMB double click
-     to accept an entry */
-  //me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
-  // Use LMB single click to accept an entry 
-  me-accept-entry: [MousePrimary];
-
+    /* Use either LMB single click or RMB single click or LMB double click
+       to accept an entry */
+    //me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
+    // Use LMB single click to accept an entry 
+    me-accept-entry: [MousePrimary];
 }
 
 @theme "/dev/null"
 @import "colors.rasi"
-
-element-text {
-    highlight:        inherit;
-    text-color:       inherit;
-}
-element-icon {
-    background-color: transparent;
-    size:             1.0000em ;
-    cursor:           inherit;
-    text-color:       inherit;
-}
 
 * {
     font: "JetBrainsMono Nerd Font 13";
@@ -40,11 +32,15 @@ element-icon {
     background-color: transparent;
 }
 
-configuration {
-    modi: "drun";
-    show-icons: true;
-    display-drun: " ";
-    icon-theme: "Tela-circle-dracula";
+element-text {
+    highlight:        inherit;
+    text-color:       inherit;
+}
+element-icon {
+    background-color: transparent;
+    size:             1.0000em ;
+    cursor:           inherit;
+    text-color:       inherit;
 }
 
 listview {
@@ -99,28 +95,15 @@ element {
     text-color: @theme-fg-primary;
 }
 
-element normal.normal {
+element normal, element alternate {
 	background-color: transparent;
 	text-color: @theme-fg-primary;
 }
 
-
-element alternate.normal {
-	background-color: transparent;
-	text-color: @theme-fg-primary;
-}
-
-
-element selected.active {
+element selected {
 	background-color: @theme-highlight-color;
 	text-color: @theme-fg-highlight-color; 
 }
-
-element selected.normal {
-	background-color: @theme-highlight-color;
-	text-color: @theme-fg-highlight-color;
-}
-
 
 message {
     background-color: red;

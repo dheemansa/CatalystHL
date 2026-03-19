@@ -103,7 +103,7 @@ element {
     text-color:                  @theme-fg-primary;
 }
 
-element selected.normal {
+element selected {
     background-color:            @theme-highlight-color;
     text-color:                  @theme-fg-highlight-color;
 }

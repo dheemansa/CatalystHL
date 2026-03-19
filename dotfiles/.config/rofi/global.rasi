@@ -71,22 +71,12 @@ element {
     text-color: @theme-fg-primary;
 }
 
-element normal.normal {
+element normal, element alternate {
     background-color: transparent;
     text-color: @theme-fg-primary;
 }
 
-element alternate.normal {
-    background-color: transparent;
-    text-color: @theme-fg-primary;
-}
-
-element selected.active {
-    background-color: @theme-highlight-color;
-    text-color: @theme-fg-highlight-color;
-}
-
-element selected.normal {
+element selected {
     background-color: @theme-highlight-color;
     text-color: @theme-fg-highlight-color;
 }

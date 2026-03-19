@@ -58,16 +58,12 @@ element {
     text-color: @theme-fg-primary;
 }
 
-//element alternate.normal,
-//element normal.normal {
-element normal{
+element normal, element alternate {
 	background-color: transparent;
 	text-color: @theme-fg-primary;
 }
 
-//element selected.normal,
-//element selected.active {
-element selected{
+element selected {
 	background-color: @theme-highlight-color;
 	text-color: @theme-fg-highlight-color;
 }
