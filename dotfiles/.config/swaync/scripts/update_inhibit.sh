@@ -1,6 +1,9 @@
 #!/bin/bash
-if pgrep -x "hypridle" > /dev/null; then
-    echo "false"
-else
+
+INHIBIT_CMD="systemd-inhibit --what=idle sleep infinity"
+
+if pgrep -f "$INHIBIT_CMD" > /dev/null; then
     echo "true"
+else
+    echo "false"
 fi
