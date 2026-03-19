@@ -48,17 +48,30 @@
                 {
                     "label": "",
                     "type": "toggle",
-                    "command": "bash -c $HOME/.config/swaync/scripts/inhibit.sh",
-                    "update-command": "sh -c $HOME/.config/swaync/scripts/update_inhibit.sh"
+                    "command": "$HOME/.config/swaync/scripts/inhibit.sh",
+                    "update-command": "$HOME/.config/swaync/scripts/update_inhibit.sh"
+                },
+
+                {
+                    "label": "",
+                    "type": "toggle",
+                    "command": "$HOME/.config/swaync/scripts/blue_filter.sh",
+                    "update-command": "$HOME/.config/swaync/scripts/update_blue_filter.sh"
                 },
 
                 {
                     "label": "󰀁",
                     "command": "swaync-client -cp ; notify-send 'Screenshot OCR: Not yet implemented'"
                 },
+
+                {
+                    "label": "󰎟",
+                    "command": "swaync-client -C"
+                },
+
                 {
                     "label": "",
-                    "command": "swaync-client -cp ; bash -c $HOME/.config/rofi/scripts/powermenu.sh"
+                    "command": "swaync-client -cp ; $HOME/.config/rofi/scripts/powermenu.sh"
                 }
             ]
         }
