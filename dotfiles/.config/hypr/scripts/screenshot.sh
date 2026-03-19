@@ -130,5 +130,5 @@ if $SHOW_NOTIFICATION; then
   ACTION_TEXT="Saved"
   if $COPY; then ACTION_TEXT="Saved & Copied"; fi
   
-  notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE"
+  notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE" -a Screenshot
 fi
