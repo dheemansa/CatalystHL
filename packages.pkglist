@@ -30,6 +30,10 @@ slurp
 grim
 tesseract
 
+
+# --- Screenrecord---
+wf-recorder
+
 # --- Audio ---
 pipewire
 pipewire-pulse
@@ -51,6 +55,7 @@ fzf
 zoxide
 fastfetch
 figlet
+fd
 
 # --- File Management ---
 nemo
@@ -87,7 +92,7 @@ ttf-jetbrains-mono-nerd
 otf-geist-mono-nerd 
 
 # --- Wallpaper Management ---
-swww
+awww
 hyprpolkitagent 
 
 # --- System Monitoring ---
@@ -95,3 +100,7 @@ lm_sensors
 
 # ---- Media Player ------
 mpv
+
+
+# ---OOM management ----
+earlyoom
