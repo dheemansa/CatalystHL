@@ -266,11 +266,15 @@ def main():
         print("Warning: Skipping package installation.", file=sys.stderr)
 
     backup_conflicting_files(Path("dotfiles"), Path.home())
+    print("\n")
 
     print(":: All dependencies satisfied. Deploying dotfiles using GNU Stow...")
     deploy_dotfiles()
+    print("\n")
     install_uosc()
+    print("\n")
     initialize_wallpapers()
+    print("\n")
 
     print("\n-------------------------------------")
     print("Installation complete!")
