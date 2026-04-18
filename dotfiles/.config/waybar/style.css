@@ -1,17 +1,7 @@
 @import "./colors.css";
-/* @define-color main-bg rgba(17, 17, 17, 0.3); */
-/* @define-color bar-bg rgba(30, 30, 46, 0); */
-/* @define-color main-fg rgba(180, 190, 254, 1); */
-/* @define-color active-bg rgba(180, 190, 254, 0.9); */
-/* @define-color active-fg rgba(0, 0, 0, 0.7); */
-/* @define-color hover-bg rgba(75, 75, 125, 0.4); */
-/* @define-color hover-fg rgba(174, 170, 240, 0.8); */
 
 @define-color success-color #a6e3a1;
-/* @define-color error-color #f38ba8; */
 @define-color warning-color #fab387;
-/* @define-color cpu-color #89b4fa; */
-/* @define-color memory-color #cba6f7; */
 
 @define-color cpu-color @main-fg;
 @define-color memory-color @main-fg;
@@ -167,35 +157,28 @@ tooltip {
 }
 
 #network {
-    /* color: @success-color; */
     color: @main-fg;
 }
 
 #network.disabled {
-    /* color: @error-color; */
     color: @accent-secondary;
 }
 
 #network.disconnected {
-    color: @disconnected-color;
+    color: @main-fg;
 }
 
 #pulseaudio.output,
 #pulseaudio.input {
-    /* color: @success-color; */
     color: @main-fg;
 }
 
 #pulseaudio.input.source-muted,
 #pulseaudio.output.muted {
-    /* color: @error-color; */
-    /* color: @main-fg; */
     color: @accent;
 }
 
 #custom-do-not-disturb.dnd-on {
-    /* color: @success-color; */
-    /* color: @disconnected-color; */
     color: @main-fg;
 }
 
@@ -218,7 +201,5 @@ tooltip {
 }
 
 #custom-power {
-    /* color: @error-color; */
-    /* color: @main-fg; */
     color: @accent-secondary;
 }

@@ -142,11 +142,11 @@
     },
 
     "custom/do-not-disturb": {
-        "exec": "sh ~/.config/waybar/scripts/dnd.sh status",
+        "exec": "~/.config/waybar/scripts/dnd.sh status",
         "return-type": "json",
         "interval": 5,
-        "on-click": "sh ~/.config/waybar/scripts/dnd.sh toggle",
-        "on-click-right": "swaync-client -t",
+        "on-click": "~/.config/waybar/scripts/dnd.sh toggle",
+        "on-click-right": "swaync-client -t -sw",
         "tooltip": true,
         "format": "{}",
         "signal": 8,
@@ -166,7 +166,7 @@
     },
 
     "custom/power": {
-        "on-click": "sh ~/.config/rofi/scripts/powermenu.sh",
+        "on-click": "~/.config/rofi/scripts/powermenu.sh",
         "format": " ",
         "rotate": 0,
         "tooltip": false,
@@ -239,7 +239,7 @@
             "disabled": "󰤮", // Add an icon for disabled state
         },
         "tooltip": false,
-        "on-click": "sh ~/.config/rofi/scripts/network-manager.sh",
+        "on-click": "~/.config/rofi/scripts/network-manager.sh",
         "interval": 30
     },
 }
