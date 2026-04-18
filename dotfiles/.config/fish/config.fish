@@ -21,7 +21,7 @@ if status is-interactive
     fzf --fish | source
 
     # Centralized list of files/directories to exclude from fzf
-    set -l fzf_excludes ".config/BraveSoftware" ".config/chromium" ".local" ".cache" ".cargo" ".git" ".idea" ".rustup" ".vscode" "__pycache__" "build" "dist" "node_modules" "target" "temp" "tmp" "venv"
+    set -l fzf_excludes ".config/BraveSoftware" ".config/chromium" ".local" ".cache" ".cargo" ".git" ".venv" ".idea" ".rustup" ".vscode" "__pycache__" "build" "dist" "node_modules" "target" "temp" "tmp" "venv"
 
     if type -q fd
         # Use fd for faster search, applying excludes
@@ -46,8 +46,8 @@ if status is-interactive
     end
     
     alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-    
-    alias wc="wl-copy"
+    alias sv="source .venv/bin/activate.fish"
+    alias wcp="wl-copy"
 
     fish_add_path $HOME/.local/bin
 
