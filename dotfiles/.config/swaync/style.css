@@ -331,3 +331,20 @@
 .blank-window {
     background: transparent;
 }
+
+/* Blinking record button (4th button in grid) */
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(4) > button:checked {
+    background-color: #ff3333;
+    animation: blink-record 1.5s ease-in-out infinite;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild:nth-child(4) > button:checked > label {
+    color: white;
+}
+
+@keyframes blink-record {
+    0%   { background-color: #ff3333; }
+    50%  { background-color: rgba(255, 51, 51, 0.4); }
+    100% { background-color: #ff3333; }
+}
+

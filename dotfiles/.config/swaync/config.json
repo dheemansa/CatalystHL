@@ -60,8 +60,15 @@
                 },
 
                 {
-                    "label": "󰀁",
+                    "label": "󱄽",
                     "command": "swaync-client -cp ; $HOME/.config/swaync/scripts/screenshot_ocr.sh"
+                },
+
+                {
+                    "label": "",
+                    "type": "toggle",
+                    "command": "swaync-client -cp ; $HOME/.config/swaync/scripts/screenrecord.sh",
+                    "update-command": "$HOME/.config/swaync/scripts/screenrecord_update.sh"
                 },
 
                 {
