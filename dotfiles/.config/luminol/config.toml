@@ -1,8 +1,12 @@
 # Global settings for Luminol
 [global]
-wallpaper-command = "swww img {wallpaper_path} --transition-type wipe --transition-fps 60 --transition-step 60 ; ln -sf {wallpaper_path} /home/dheeman/.local/share/CatalystHL/current-wallpaper"
+wallpaper-command = "awww img {wallpaper_path} --transition-type wipe --transition-fps 60 --transition-step 60 ; ln -sf {wallpaper_path} /home/dheeman/.local/share/CatalystHL/current-wallpaper"
 theme-type = "dark"
-reload-commands = ["swaync-client -rs", "notify-send heyy", "hyprctl reload"]
+reload-commands = [
+  "swaync-client -rs",
+  "notify-send heyy -h 'boolean:transient:true'",
+  "hyprctl reload",
+]
 # Default: false
 use-shell = true # (Optional) Set to true to execute reload-commands using the system shell.
 # If true, stdout and stderr from reload commands will be sent to a log file.
@@ -80,10 +84,23 @@ on-accent = { source = "text-tertiary" }
 [gtk3]
 color-format = "hex6"
 output-file = "~/.config/gtk-3.0/gtk_colors.css"
-syntax = " @define-color {name} {color};"
+syntax = "@define-color {name} {color};"
 remap-colors = true
 
 [gtk3.colors]
+accent = { source = "accent-primary" }
+text = { source = "text-primary" }
+crust = { source = "text-tertiary" }
+base = { source = "bg-primary" }
+surface_0 = { source = "bg-secondary" }
+
+[gtk4]
+color-format = "hex6"
+output-file = "~/.config/gtk-4.0/gtk_colors.css"
+syntax = "@define-color {name} {color};"
+remap-colors = true
+
+[gtk4.colors]
 accent = { source = "accent-primary" }
 text = { source = "text-primary" }
 crust = { source = "text-tertiary" }

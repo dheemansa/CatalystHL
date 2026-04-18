@@ -15,7 +15,7 @@ ROFI_THEME_STR="$HOME/.config/rofi/themes/wallpaper-select.rasi"
 mkdir -p "$(dirname "$LINK_PATH")"
 
 # check deps
-for cmd in jq rofi swww; do
+for cmd in jq rofi awww; do
   command -v "$cmd" >/dev/null 2>&1 || { echo "Error: $cmd not found." >&2; exit 1; }
 done
 
@@ -107,7 +107,7 @@ if [[ -z "$chosen_rel" ]]; then
 fi
 
 # --- Apply Wallpaper ---
-# swww img "$WALLPAPER_DIR/$chosen_rel" --transition-type wipe --transition-fps 60 --transition-step 60
+# awww img "$WALLPAPER_DIR/$chosen_rel" --transition-type wipe --transition-fps 60 --transition-step 60
 lumi -i "$WALLPAPER_DIR/$chosen_rel"
 
 # Update Symlink
