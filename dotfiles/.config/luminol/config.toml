@@ -18,8 +18,9 @@ terminal-color-style = "pywal"
 # Hyprland: Using remap-colors with transformations
 [hyprland]
 color-format = "hex6value"
-output-file = "~/.config/hypr/colors.conf"
-syntax = "${name} = rgb({color})"
+output-file = "~/.config/hypr/colors.lua"
+template = "~/.config/hypr/colors.lua.template"
+syntax = "{placeholder}"
 remap-colors = true
 
 [hyprland.colors]
@@ -106,3 +107,15 @@ text = { source = "text-primary" }
 crust = { source = "text-tertiary" }
 base = { source = "bg-primary" }
 surface_0 = { source = "bg-secondary" }
+
+[quickshell]
+color-format = "hex6"
+output-file = "~/.config/quickshell/theme/colors.json"
+template = "~/.config/quickshell/theme/colors.json.template"
+syntax = "{placeholder}"
+# remap-colors = true
+
+# [quickshell.colors]
+# accent = { source = "accent-primary" }
+# accent-secondary = { source = "accent-secondary" }
+# on-accent = { source = "text-tertiary" }

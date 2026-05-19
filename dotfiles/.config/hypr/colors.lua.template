@@ -1,0 +1,4 @@
+return {
+	active_border = "rgb({active_border})",
+	inactive_border = "rgb({inactive_border})",
+}
