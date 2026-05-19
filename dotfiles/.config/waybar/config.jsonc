@@ -10,7 +10,7 @@
 
     "modules-left": [
         "custom/padd",
-        "group/system-info",
+        "group/system-drawer",
         "custom/l_end",
         "hyprland/workspaces",
         "custom/r_end",
@@ -19,9 +19,24 @@
     "modules-center": ["custom/l_end", "clock", "custom/r_end"],
     "modules-right": ["group/system-levels", "custom/padd", "group/control-panel", "custom/padd"],
 
-    "group/system-info": {
+    "group/system-drawer": {
         "orientation": "horizontal",
-        "modules": ["cpu", "memory", "custom/cpu-temp"],
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "system-drawer-child",
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "custom/system-icon",
+            "custom/bar",
+            "cpu",
+            "memory",
+            "custom/cpu-temp"
+        ]
+    },
+    "custom/system-icon": {
+        "format": "󰕮",
+        "tooltip": false
     },
     "group/system-levels": {
         "orientation": "horizontal",
@@ -178,6 +193,12 @@
         "format": "  ",
         "tooltip": false,
     },
+
+    "custom/bar": {
+        "format": " |",
+        "tooltip": false,
+    },
+
     "custom/l_end": {
         "format": " ",
         //"interval": "once",

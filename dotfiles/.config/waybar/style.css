@@ -49,7 +49,7 @@ tooltip {
 #custom-l_end,
 #custom-r_end,
 #system-levels,
-#system-info,
+#system-drawer,
 #control-panel,
 #custom-padd_bg {
     background: @main-bg;
@@ -92,7 +92,7 @@ tooltip {
 }
 
 #system-levels,
-#system-info,
+#system-drawer,
 #control-panel {
     border-radius: 20px;
     padding: 0 20px;
