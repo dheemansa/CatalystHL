@@ -158,83 +158,83 @@ format = '[[($all_status$ahead_behind )](fg:syntax_bg bg:color_yellow)]($style)'
 # Language specific modules
 [nodejs]
 symbol = ""
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [c]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [dotnet]
 symbol = "󰪮"
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [rust]
 symbol = ""
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [golang]
 symbol = ""
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [php]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [java]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [kotlin]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [haskell]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol( $version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [python]
 symbol = " "
 style = "fg:color_green"
-format = '[ $symbol($version)( \($virtualenv\)) ]($style)'
+format = '[ $symbol($version)( \($virtualenv\)) ]($style) '
 
 [elixir]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [elm]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [gradle]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [julia]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [nim]
 symbol = "󰆥 "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 [scala]
 symbol = " "
-style = "bg:color_green"
-format = '[[ $symbol ($version) ](fg:syntax_bg bg:color_green)]($style)'
+style = "fg:color_green"
+format = '[ $symbol($version) ]($style) '
 
 # Module that displays the docker context.
 [docker_context]
