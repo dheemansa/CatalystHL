@@ -192,12 +192,12 @@ tooltip {
 }
 
 #bluetooth.on {
-    color: @disconnected-color;
+    color: @main-fg;
 }
 
 #bluetooth.connected,
 #bluetooth.connected-battery {
-    color: @bluetooth-color;
+    color: @main-fg;
 }
 
 #custom-power {
