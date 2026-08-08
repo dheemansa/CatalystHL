@@ -27,7 +27,39 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + ALT + W", hl.dsp.exec_cmd("~/.config/rofi/scripts/wallpaper-select.sh"))
 
 -- Gamemode
-hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("~/.config/hypr/scripts/gamemode.sh"))
+hl.bind(mainMod .. " + G", function ()
+    local game_mode = (hl.get_config("animations.enabled") == false)
+
+    if game_mode then
+        -- Gamemode OFF
+        hl.exec_cmd("notify-send -u low -t 5000 'Gamemode [OFF]'")
+        hl.exec_cmd("hyprctl reload")
+        hl.exec_cmd("waybar")
+        return
+    end
+    
+    -- Gamemode ON
+    hl.exec_cmd("notify-send -u low -t 5000 'Gamemode [ON]'")
+    hl.exec_cmd("pkill waybar")
+    hl.exec_cmd("hyprctl dispatch opacity 1 'class:*'")
+    
+    hl.config({
+        general = {
+            gaps_in = 0,
+            gaps_out = 0,
+            border_size = 1,
+        },
+        animations = {
+            enabled = false,
+        },
+        decoration = {
+            shadow = { enabled = false },
+            blur = { enabled = false },
+            rounding = 0,
+            fullscreen_opacity = 1,
+        }
+    })
+end)
 
 -- Open Apps
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
