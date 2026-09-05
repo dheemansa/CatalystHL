@@ -1,0 +1,12 @@
+{
+  "$schema": "https://githubusercontent.com",
+  "workspace": {
+    "library": [
+      "/usr/share/hypr/stubs"
+    ],
+    "checkThirdParty": false
+  },
+  "diagnostics": {
+    "globals": ["hl"]
+  }
+}
