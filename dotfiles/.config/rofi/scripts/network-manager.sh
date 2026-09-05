@@ -81,8 +81,8 @@ show_wifi_list() {
 
         ssids+=("$ssid")
         formatted_ssids+=("$display")
-    done < <(nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list)
 
+    done < <(nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list | awk -F: '!seen[$4]++')
     formatted_ssids=("$REFRESH_ICON  Refresh List" "${formatted_ssids[@]}" "$CANCEL_ICON  Cancel/Back")
 
     # Use "${ROFI_THEME_ARGS[@]}"
