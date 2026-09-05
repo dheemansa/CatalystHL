@@ -46,9 +46,9 @@ split("\n")
 # Validate and write JSON
 if [ -n "$JSON_CONTENT" ] && echo "$JSON_CONTENT" | jq -e . >/dev/null 2>&1; then
     echo "$JSON_CONTENT" > "$WALLPAPER_JSON"
-    echo "  Manifest updated at: $WALLPAPER_JSON"
+    echo "Manifest updated at: $WALLPAPER_JSON"
 else
-    echo "  Error: Failed to generate valid JSON." >&2
+    echo "Error: Failed to generate valid JSON." >&2
     exit 1
 fi
 
@@ -70,7 +70,7 @@ jq -r '.[] | .[]' "$WALLPAPER_JSON" | sort -u > "$JSON_THUMBS"
 
 # Delete thumbnails that are in Cache but NOT in JSON
 comm -13 "$JSON_THUMBS" "$CACHE_FILES" | while read -r thumb_to_delete; do
-    echo "  Deleting: $thumb_to_delete"
+    echo "Deleting: $thumb_to_delete"
     rm -f "$CACHE_DIR/$thumb_to_delete"
     # Try to remove empty parent directories
     rmdir --ignore-fail-on-non-empty "$(dirname "$CACHE_DIR/$thumb_to_delete")" 2>/dev/null || true
@@ -78,7 +78,7 @@ done
 rm "$JSON_THUMBS" "$CACHE_FILES"
 
 # B. Creation Phase (Sequential)
-echo "  Checking for missing thumbnails..."
+echo "Checking for missing thumbnails..."
 
 jq -r '.[] | .[]' "$WALLPAPER_JSON" | while read -r rel_path; do
     thumb_path="$CACHE_DIR/$rel_path"
@@ -92,11 +92,11 @@ jq -r '.[] | .[]' "$WALLPAPER_JSON" | while read -r rel_path; do
         mkdir -p "$thumb_dir"
         
         if [ -f "$full_path" ]; then
-            echo "  Creating thumbnail: $rel_path"
+            echo "Creating thumbnail: $rel_path"
             magick "$full_path" -thumbnail "${THUMBNAIL_SIZE}^" -gravity center -extent "$THUMBNAIL_SIZE" "$thumb_path"
         fi
     fi
 done
 
-echo -e "\n  Update Complete."
+echo -e "\n\nUpdate Complete."
 notify-send -i "wallpaper" "Wallpaper System" "Manifest and thumbnails updated."

@@ -95,24 +95,24 @@ crust = { source = "text-tertiary" }
 base = { source = "bg-primary" }
 surface_0 = { source = "bg-secondary" }
 
-[gtk4]
-color-format = "hex6"
-output-file = "~/.config/gtk-4.0/gtk_colors.css"
-syntax = "@define-color {name} {color};"
-remap-colors = true
+# [gtk4]
+# color-format = "hex6"
+# output-file = "~/.config/gtk-4.0/gtk_colors.css"
+# syntax = "@define-color {name} {color};"
+# remap-colors = true
+#
+# [gtk4.colors]
+# accent = { source = "accent-primary" }
+# text = { source = "text-primary" }
+# crust = { source = "text-tertiary" }
+# base = { source = "bg-primary" }
+# surface_0 = { source = "bg-secondary" }
 
-[gtk4.colors]
-accent = { source = "accent-primary" }
-text = { source = "text-primary" }
-crust = { source = "text-tertiary" }
-base = { source = "bg-primary" }
-surface_0 = { source = "bg-secondary" }
-
-[quickshell]
-color-format = "hex6"
-output-file = "~/.config/quickshell/theme/colors.json"
-template = "~/.config/quickshell/theme/colors.json.template"
-syntax = "{placeholder}"
+# [quickshell]
+# color-format = "hex6"
+# output-file = "~/.config/quickshell/theme/colors.json"
+# template = "~/.config/quickshell/theme/colors.json.template"
+# syntax = "{placeholder}"
 # remap-colors = true
 
 # [quickshell.colors]
