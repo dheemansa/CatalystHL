@@ -177,7 +177,7 @@ def deploy_dotfiles():
     print(":: Stowing dotfiles...")
     target_home = str(Path.home())
     stow_dir = "dotfiles"
-    run_command(["stow", "-v", "-t", target_home, stow_dir])
+    run_command(["stow", "--no-folding", "-v", "-t", target_home, stow_dir])
 
 
 def delete_dotfiles():
@@ -241,6 +241,20 @@ def initialize_wallpapers():
         )
 
 
+def set_gtk_theme():
+    print("Applying Gtk Theme")
+    run_command(
+        [
+            "gsettings",
+            "set",
+            "org.gnome.desktop.interface",
+            "gtk-theme",
+            "adw-gtk3-dark",
+        ],
+        check=False,
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="CatalystHL Dotfiles Installer")
     parser.add_argument(
@@ -275,6 +289,7 @@ def main():
     print("\n")
     initialize_wallpapers()
     print("\n")
+    set_gtk_theme()
 
     print("\n-------------------------------------")
     print("Installation complete!")
