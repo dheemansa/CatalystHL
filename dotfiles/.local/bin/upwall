@@ -45,7 +45,7 @@ split("\n")
 
 # Validate and write JSON
 if [ -n "$JSON_CONTENT" ] && echo "$JSON_CONTENT" | jq -e . >/dev/null 2>&1; then
-    echo "$JSON_CONTENT" > "$WALLPAPER_JSON"
+    echo "$JSON_CONTENT" >"$WALLPAPER_JSON"
     echo "Manifest updated at: $WALLPAPER_JSON"
 else
     echo "Error: Failed to generate valid JSON." >&2
@@ -62,11 +62,11 @@ JSON_THUMBS=$(mktemp)
 CACHE_FILES=$(mktemp)
 
 # Get expected relative paths from JSON
-jq -r '.[] | .[]' "$WALLPAPER_JSON" | sort -u > "$JSON_THUMBS"
+jq -r '.[] | .[]' "$WALLPAPER_JSON" | sort -u >"$JSON_THUMBS"
 
 # Get relative paths of existing thumbnails in cache
 # We cd into CACHE_DIR so find returns paths relative to it (e.g. folder1/img.png)
-(cd "$CACHE_DIR" && find . -type f -not -path '*/.*' -printf "%P\n") | sort > "$CACHE_FILES"
+(cd "$CACHE_DIR" && find . -type f -not -path '*/.*' -printf "%P\n") | sort >"$CACHE_FILES"
 
 # Delete thumbnails that are in Cache but NOT in JSON
 comm -13 "$JSON_THUMBS" "$CACHE_FILES" | while read -r thumb_to_delete; do
@@ -83,14 +83,14 @@ echo "Checking for missing thumbnails..."
 jq -r '.[] | .[]' "$WALLPAPER_JSON" | while read -r rel_path; do
     thumb_path="$CACHE_DIR/$rel_path"
     thumb_dir=$(dirname "$thumb_path")
-    
+
     # Only generate if the thumbnail DOES NOT EXIST
     if [ ! -f "$thumb_path" ]; then
         full_path="$WALLPAPER_DIR/$rel_path"
-        
+
         # Ensure subfolder exists in cache
         mkdir -p "$thumb_dir"
-        
+
         if [ -f "$full_path" ]; then
             echo "Creating thumbnail: $rel_path"
             magick "$full_path" -thumbnail "${THUMBNAIL_SIZE}^" -gravity center -extent "$THUMBNAIL_SIZE" "$thumb_path"

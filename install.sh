@@ -7,7 +7,7 @@ set -e
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
 # Check if Python is installed
-if ! command -v python3 &> /dev/null; then
+if ! command -v python3 &>/dev/null; then
     echo ":: Python 3 is required but not installed. Installing..."
     # Ensure system is Arch Linux based
     if [ -f /etc/arch-release ]; then
