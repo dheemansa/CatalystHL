@@ -9,7 +9,7 @@ FILE=""
 SILENT=false
 
 show_help() {
-  cat <<EOF
+    cat <<EOF
 Usage: screenshot [mode] [options]
 
 Modes:
@@ -27,33 +27,33 @@ EOF
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
-  case $1 in
-    monitor|region|window)
-      MODE="$1"
-      shift
-      ;;
+    case $1 in
+    monitor | region | window)
+        MODE="$1"
+        shift
+        ;;
     -c)
-      COPY=true
-      shift
-      ;;
-    -s|--silent)
-      SILENT=true
-      shift
-      ;;
+        COPY=true
+        shift
+        ;;
+    -s | --silent)
+        SILENT=true
+        shift
+        ;;
     -f)
-      FILE="$2"
-      shift 2
-      ;;
-    -h|--help)
-      show_help
-      exit 0
-      ;;
+        FILE="$2"
+        shift 2
+        ;;
+    -h | --help)
+        show_help
+        exit 0
+        ;;
     *)
-      echo "Unknown argument: $1" >&2
-      echo "Run 'screenshot --help' for usage." >&2
-      exit 1
-      ;;
-  esac
+        echo "Unknown argument: $1" >&2
+        echo "Run 'screenshot --help' for usage." >&2
+        exit 1
+        ;;
+    esac
 done
 
 # File Path Setup
@@ -67,56 +67,67 @@ fi
 # Geometry Selection
 GEOM=""
 case "$MODE" in
-  region)
+region)
     # Interactively select an area
     GEOM=$(slurp -b "#0e0e1466" -c "FFFFFF80")
 
     ;;
-  window)
+window)
     # Get active workspace and visible windows
     ACTIVE_ID=$(hyprctl activeworkspace -j | jq '.id')
     WINDOWS=$(hyprctl clients -j | jq -r --argjson active_id "$ACTIVE_ID" '.[] | select(.hidden == false and .workspace.id == $active_id) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1]) \(.address)"')
-    
+
     # Select window via slurp
     SELECTED_ADDRESS=$(echo "$WINDOWS" | slurp -r -b "#0e0e1466" -c "FFFFFF80" -f "%l")
     if [ -n "$SELECTED_ADDRESS" ]; then
-      GEOM=$(hyprctl clients -j | jq -r --arg addr "$SELECTED_ADDRESS" '.[] | select(.address == $addr) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+        GEOM=$(hyprctl clients -j | jq -r --arg addr "$SELECTED_ADDRESS" '.[] | select(.address == $addr) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
     fi
     ;;
-  monitor)
-    # Find monitor containing cursor
+
+monitor)
+    # Find monitor containing cursor utilizing logical (scaled) boundaries
     CURSOR_POS=$(hyprctl cursorpos -j)
     CX=$(echo "$CURSOR_POS" | jq '.x')
     CY=$(echo "$CURSOR_POS" | jq '.y')
-    
-    GEOM=$(hyprctl monitors -j | jq -r --argjson cx "$CX" --argjson cy "$CY" '
+
+    OUTPUT=$(hyprctl monitors -j | jq -r --argjson cx "$CX" --argjson cy "$CY" '
       .[] | select(
-        .x <= $cx and $cx < .x + .width and
-        .y <= $cy and $cy < .y + .height
-      ) | "\(.x),\(.y) \(.width)x\(.height)"
+        .x <= $cx and $cx < .x + (.width / .scale) and
+        .y <= $cy and $cy < .y + (.height / .scale)
+      ) | .name
     ')
-    
+
     # Fallback to active monitor
-    if [ -z "$GEOM" ]; then
-      MONITOR_NAME=$(hyprctl activeworkspace -j | jq -r '.monitor')
-      GEOM=$(hyprctl monitors -j | jq -r ".[] | select(.name==\"$MONITOR_NAME\") | \"\(.x),\(.y) \(.width)x\(.height)\"")
+    if [ -z "$OUTPUT" ] || [ "$OUTPUT" == "null" ]; then
+        OUTPUT=$(hyprctl activeworkspace -j | jq -r '.monitor')
     fi
     ;;
+
 esac
 
-[ -z "$GEOM" ] && { echo "Geometry selection failed or cancelled." >&2; exit 1; }
-
 # Take Screenshot
-grim -g "$GEOM" "$FILE" || { 
+if [ "$MODE" = "monitor" ]; then
+    [ -z "$OUTPUT" ] && {
+        echo "Monitor selection failed." >&2
+        exit 1
+    }
+    grim -o "$OUTPUT" "$FILE"
+else
+    [ -z "$GEOM" ] && {
+        echo "Geometry selection failed or cancelled." >&2
+        exit 1
+    }
+    grim -g "$GEOM" "$FILE"
+fi || {
     if ! $SILENT; then
         notify-send "Screenshot Failed" "Could not capture image." -u critical
     fi
-    exit 1 
+    exit 1
 }
 
 # Clipboard Copy
 if $COPY; then
-  wl-copy < "$FILE"
+    wl-copy <"$FILE"
 fi
 
 # Notification
@@ -127,15 +138,15 @@ if ! $SILENT; then
 
     # Send notification in background to not block execution
     (
-      ACTION=$(notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE" -a Screenshot -A "default=Open" -A "delete=Delete")
-      case "$ACTION" in
+        ACTION=$(notify-send "Screenshot ($MODE_DISPLAY)" "$ACTION_TEXT: $(basename "$FILE")" -i "$FILE" -a Screenshot -A "default=Open" -A "delete=Delete")
+        case "$ACTION" in
         "default")
-          xdg-open "$FILE"
-          ;;
+            xdg-open "$FILE"
+            ;;
         "delete")
-          rm -f "$FILE"
-          notify-send "Screenshot Deleted" "Removed $(basename "$FILE")" -a Screenshot -u low
-          ;;
-      esac
+            rm -f "$FILE"
+            notify-send "Screenshot Deleted" "Removed $(basename "$FILE")" -a Screenshot -u low
+            ;;
+        esac
     ) &
 fi
