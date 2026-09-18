@@ -13,9 +13,6 @@ for cmd in nmcli rofi notify-send; do
 done
 
 # Define the theme arguments as an array
-# This ensures that -theme-str and its value are passed as two distinct arguments to rofi
-
-# Define the base directory for your Rofi themes
 ROFI_THEME="$HOME/.config/rofi/themes/network-manager.rasi"
 ROFI_THEME_ARGS=( -theme "${ROFI_THEME}" )
 
@@ -52,7 +49,6 @@ toggle_wifi() {
 
 disconnect_menu() {
     local ssid="$1"
-    # Use "${ROFI_THEME_ARGS[@]}" to expand the array correctly
     local choice=$(printf "  Disconnect from $ssid\n$CANCEL_ICON  Cancel" | rofi -dmenu -p "Connected to $ssid:" "${ROFI_THEME_ARGS[@]}")
 
     case "$choice" in
@@ -66,9 +62,23 @@ show_wifi_list() {
     local -a ssids=()
     local -a formatted_ssids=()
     local active_ssid=$(get_connected_ssid)
+    
+    local duplicate_found=false
+    local -A seen_ssids=()
 
+    # Read from nmcli, but sort numerically by Signal Strength (field 2) in descending order first
     while IFS=: read -r in_use signal security ssid; do
         [[ -z "$ssid" ]] && continue
+
+        # Check if we have seen this SSID already. 
+        # The :- handles bash strict mode (set -u) for unbound variables.
+        if [[ -n "${seen_ssids[$ssid]:-}" ]]; then
+            duplicate_found=true
+            continue
+        fi
+        
+        # Mark this SSID as seen
+        seen_ssids[$ssid]=1
 
         local level=$((signal / 25))
         (( level > 3 )) && level=3
@@ -82,10 +92,15 @@ show_wifi_list() {
         ssids+=("$ssid")
         formatted_ssids+=("$display")
 
-    done < <(nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list | awk -F: '!seen[$4]++')
+    done < <(nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list | sort -t: -k2 -nr)
+
+    # Notify the user if duplicates were removed
+    if [[ "$duplicate_found" == true ]]; then
+        notify-send -a "Network Manager" "Wi-Fi" "Multiple same Wi-Fi networks found. Showing only the strongest network."
+    fi
+
     formatted_ssids=("$REFRESH_ICON  Refresh List" "${formatted_ssids[@]}" "$CANCEL_ICON  Cancel/Back")
 
-    # Use "${ROFI_THEME_ARGS[@]}"
     selected=$(printf "%s\n" "${formatted_ssids[@]}" | rofi -dmenu -i -p "Select Network:" "${ROFI_THEME_ARGS[@]}")
 
     if [[ -z "$selected" || "$selected" == "$CANCEL_ICON  Cancel/Back" ]]; then
@@ -94,7 +109,7 @@ show_wifi_list() {
 
     if [[ "$selected" == "$REFRESH_ICON  Refresh List" ]]; then
         notify-send -a "Network Manager" "Network Manager" "Scanning Wi-Fi"
-        nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list --rescan yes #to force rescan
+        nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list --rescan yes
         show_wifi_list  
         return
     fi
@@ -107,7 +122,6 @@ show_wifi_list() {
     chosen_ssid="${ssids[$ssid_index]}"
 
     if [[ "$chosen_ssid" == "$active_ssid" ]]; then
-        # Use "${ROFI_THEME_ARGS[@]}"
         action=$(printf "  Disconnect\n  Forget\n$CANCEL_ICON  Cancel" | rofi -dmenu -p "Action for $chosen_ssid:" "${ROFI_THEME_ARGS[@]}")
         case "$action" in
             "  Disconnect")
@@ -134,9 +148,6 @@ show_wifi_list() {
                     ;;
             esac
         else
-            # Use the input theme for the password prompt
-            # To enable password censoring (displaying asterisks), uncomment the line below and comment the next line.
-            # pass=$(rofi -dmenu -p "Password for $chosen_ssid:" -password "${ROFI_THEME_ARGS_INPUT[@]}")
             pass=$(rofi -dmenu -p "Password for $chosen_ssid:" "${ROFI_THEME_ARGS_INPUT[@]}")
             [[ -z "$pass" ]] && return
             if nmcli device wifi connect "$chosen_ssid" password "$pass" ifname "$WIFI_DEV"; then
@@ -164,7 +175,6 @@ main_menu() {
 
         local eth_status=$(get_ethernet_status)
 
-        # Begin menu
         local menu_items="$toggle_option\n"
         menu_items+="$eth_status\n"
 
@@ -175,14 +185,13 @@ main_menu() {
 
         menu_items+="$CANCEL_ICON  Exit Network Manager"
 
-        # Use "${ROFI_THEME_ARGS[@]}"
         local choice=$(printf "$menu_items" | rofi -dmenu -p " Network Menu:" "${ROFI_THEME_ARGS[@]}")
 
         case "$choice" in
             "$toggle_option")
                 toggle_wifi
                 if $was_enabled; then
-                    break  # Wi-Fi was just disabled
+                    break
                 fi
                 ;;
             "$WIFI_CONNECTED_ICON  Connected to $current_ssid")
@@ -197,6 +206,5 @@ main_menu() {
         esac
     done
 }
-
 
 main_menu
