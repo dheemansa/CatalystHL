@@ -49,6 +49,25 @@ def check_arch_linux():
         sys.exit(1)
 
 
+def check_lumi():
+    """Warn about the optional external Luminol dependency."""
+    if command_exists("lumi"):
+        print(":: Found 'lumi'.")
+        return
+
+    yellow = "\033[33m"
+    reset = "\033[0m"
+    print(
+        f"{yellow}Warning: 'lumi' is not installed. Wallpaper management "
+        f"will not work correctly.{reset}",
+        file=sys.stderr,
+    )
+    choice = input("Do you want to continue the installation anyway? [y/N]: ")
+    if choice.strip().lower() not in {"y", "yes"}:
+        print(":: Installation cancelled.", file=sys.stderr)
+        sys.exit(1)
+
+
 def setup_aur_helper():
     """Check for yay/paru, or install one."""
     if command_exists("paru"):
@@ -279,6 +298,7 @@ def main():
         sys.exit(0)
 
     check_arch_linux()
+    check_lumi()
     helper = setup_aur_helper()
 
     if helper:
