@@ -6,6 +6,7 @@ import subprocess
 import shutil
 import tempfile
 import argparse
+import signal
 from pathlib import Path
 from datetime import datetime
 
@@ -22,7 +23,13 @@ def run_command(cmd, check=True, input_str=None, capture=False, cwd=None):
             capture_output=capture,
             cwd=cwd,
         )
+        if result.returncode in (130, -signal.SIGINT):
+            print("\n:: Installation cancelled.", file=sys.stderr)
+            sys.exit(130)
         return result
+    except KeyboardInterrupt:
+        print("\n:: Installation cancelled.", file=sys.stderr)
+        sys.exit(130)
     except subprocess.CalledProcessError as e:
         print(f"Error executing: {' '.join(cmd)}", file=sys.stderr)
         if capture:
@@ -298,4 +305,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n:: Installation cancelled.", file=sys.stderr)
+        sys.exit(130)

@@ -2,6 +2,7 @@
 # Minimal bootstrap script to ensure Python is installed.
 
 set -e
+trap 'echo ":: Installation cancelled." >&2; exit 130' INT TERM
 
 # Change to the directory where the script is located
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1

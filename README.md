@@ -35,3 +35,12 @@ The `install.sh` script automates the installation of most packages, which are l
 
 After the installation script is complete, you may need to log out and log back in for all changes to take full effect.
 
+### Enable system services
+
+Run the service helper after installation to enable and start NetworkManager, SDDM, and earlyoom:
+
+```sh
+./services.sh
+```
+
+The script is safe to run repeatedly; active services are left running and already-enabled services are not changed.
