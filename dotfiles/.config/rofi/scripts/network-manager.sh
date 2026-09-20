@@ -9,15 +9,18 @@ REFRESH_ICON="󰑓"
 
 # Check for required dependencies
 for cmd in nmcli rofi notify-send; do
-    command -v "$cmd" >/dev/null 2>&1 || { echo >&2 "Error: $cmd is required but not installed."; exit 1; }
+    command -v "$cmd" >/dev/null 2>&1 || {
+        echo >&2 "Error: $cmd is required but not installed."
+        exit 1
+    }
 done
 
 # Define the theme arguments as an array
 ROFI_THEME="$HOME/.config/rofi/themes/network-manager.rasi"
-ROFI_THEME_ARGS=( -theme "${ROFI_THEME}" )
+ROFI_THEME_ARGS=(-theme "${ROFI_THEME}")
 
 ROFI_THEME_INPUT="$HOME/.config/rofi/themes/network-manager-input.rasi"
-ROFI_THEME_ARGS_INPUT=( -theme "${ROFI_THEME_INPUT}" )
+ROFI_THEME_ARGS_INPUT=(-theme "${ROFI_THEME_INPUT}")
 
 WIFI_DEV=$(nmcli device status | awk '$2=="wifi"{print $1; exit}')
 [ -z "$WIFI_DEV" ] && notify-send -a "Network Manager" "Wi-Fi" "No Wi-Fi device found" && exit 1
@@ -52,9 +55,9 @@ disconnect_menu() {
     local choice=$(printf "  Disconnect from $ssid\n$CANCEL_ICON  Cancel" | rofi -dmenu -p "Connected to $ssid:" "${ROFI_THEME_ARGS[@]}")
 
     case "$choice" in
-        "  Disconnect from $ssid")
-            nmcli device disconnect "$WIFI_DEV" && notify-send -a "Network Manager" "Wi-Fi" "Disconnected from $ssid"
-            ;;
+    "  Disconnect from $ssid")
+        nmcli device disconnect "$WIFI_DEV" && notify-send -a "Network Manager" "Wi-Fi" "Disconnected from $ssid"
+        ;;
     esac
 }
 
@@ -62,7 +65,7 @@ show_wifi_list() {
     local -a ssids=()
     local -a formatted_ssids=()
     local active_ssid=$(get_connected_ssid)
-    
+
     local duplicate_found=false
     local -A seen_ssids=()
 
@@ -70,18 +73,18 @@ show_wifi_list() {
     while IFS=: read -r in_use signal security ssid; do
         [[ -z "$ssid" ]] && continue
 
-        # Check if we have seen this SSID already. 
+        # Check if we have seen this SSID already.
         # The :- handles bash strict mode (set -u) for unbound variables.
         if [[ -n "${seen_ssids[$ssid]:-}" ]]; then
             duplicate_found=true
             continue
         fi
-        
+
         # Mark this SSID as seen
         seen_ssids[$ssid]=1
 
         local level=$((signal / 25))
-        (( level > 3 )) && level=3
+        ((level > 3)) && level=3
 
         local icon="${SIGNAL_ICONS[$level]}"
         [[ "$security" == *WPA* || "$security" == *WEP* ]] && icon="${SECURED_SIGNAL_ICONS[$level]}"
@@ -110,7 +113,7 @@ show_wifi_list() {
     if [[ "$selected" == "$REFRESH_ICON  Refresh List" ]]; then
         notify-send -a "Network Manager" "Network Manager" "Scanning Wi-Fi"
         nmcli --terse --fields "IN-USE,SIGNAL,SECURITY,SSID" device wifi list --rescan yes
-        show_wifi_list  
+        show_wifi_list
         return
     fi
 
@@ -124,34 +127,37 @@ show_wifi_list() {
     if [[ "$chosen_ssid" == "$active_ssid" ]]; then
         action=$(printf "  Disconnect\n  Forget\n$CANCEL_ICON  Cancel" | rofi -dmenu -p "Action for $chosen_ssid:" "${ROFI_THEME_ARGS[@]}")
         case "$action" in
-            "  Disconnect")
-                nmcli device disconnect "$WIFI_DEV" && notify-send -a "Network Manager" "Wi-Fi" "Disconnected from $chosen_ssid"
-                ;;
-            "  Forget")
-                nmcli connection delete id "$chosen_ssid" && notify-send -a "Network Manager" "Wi-Fi" "Forgotten: $chosen_ssid"
-                ;;
+        "  Disconnect")
+            nmcli device disconnect "$WIFI_DEV" && notify-send -a "Network Manager" "Wi-Fi" "Disconnected from $chosen_ssid"
+            exit 0
+            ;;
+        "  Forget")
+            nmcli connection delete id "$chosen_ssid" && notify-send -a "Network Manager" "Wi-Fi" "Forgotten: $chosen_ssid"
+            ;;
         esac
     else
         saved=$(nmcli -t -f NAME,TYPE connection show | grep -Fx "$chosen_ssid:802-11-wireless" || true)
         if [[ "$saved" ]]; then
             action=$(printf "󰒢  Connect\n  Forget\n$CANCEL_ICON  Cancel" | rofi -dmenu -p "Action for $chosen_ssid:" "${ROFI_THEME_ARGS[@]}")
             case "$action" in
-                "󰒢  Connect")
-                    if nmcli connection up id "$chosen_ssid" ifname "$WIFI_DEV"; then
-                        notify-send -a "Network Manager" "Wi-Fi" "Connected to $chosen_ssid"
-                    else
-                        notify-send -a "Network Manager" "Wi-Fi" "Failed to connect to $chosen_ssid"
-                    fi
-                    ;;
-                "  Forget")
-                    nmcli connection delete id "$chosen_ssid" && notify-send -a "Network Manager" "Wi-Fi" "Forgotten: $chosen_ssid"
-                    ;;
+            "󰒢  Connect")
+                if nmcli connection up id "$chosen_ssid" ifname "$WIFI_DEV"; then
+                    notify-send -a "Network Manager" "Wi-Fi" "Connected to $chosen_ssid"
+                    exit 0
+                else
+                    notify-send -a "Network Manager" "Wi-Fi" "Failed to connect to $chosen_ssid"
+                fi
+                ;;
+            "  Forget")
+                nmcli connection delete id "$chosen_ssid" && notify-send -a "Network Manager" "Wi-Fi" "Forgotten: $chosen_ssid"
+                ;;
             esac
         else
             pass=$(rofi -dmenu -p "Password for $chosen_ssid:" "${ROFI_THEME_ARGS_INPUT[@]}")
             [[ -z "$pass" ]] && return
             if nmcli device wifi connect "$chosen_ssid" password "$pass" ifname "$WIFI_DEV"; then
                 notify-send -a "Network Manager" "Wi-Fi" "Connected to $chosen_ssid"
+                exit 0
             else
                 notify-send -a "Network Manager" "Wi-Fi" "Failed to connect to $chosen_ssid. Check password or network."
             fi
@@ -188,21 +194,21 @@ main_menu() {
         local choice=$(printf "$menu_items" | rofi -dmenu -p " Network Menu:" "${ROFI_THEME_ARGS[@]}")
 
         case "$choice" in
-            "$toggle_option")
-                toggle_wifi
-                if $was_enabled; then
-                    break
-                fi
-                ;;
-            "$WIFI_CONNECTED_ICON  Connected to $current_ssid")
-                disconnect_menu "$current_ssid"
-                ;;
-            "󰤧  Show Available Wi-Fi")
-                show_wifi_list
-                ;;
-            "$CANCEL_ICON  Exit Network Manager" | "")
+        "$toggle_option")
+            toggle_wifi
+            if $was_enabled; then
                 break
-                ;;
+            fi
+            ;;
+        "$WIFI_CONNECTED_ICON  Connected to $current_ssid")
+            disconnect_menu "$current_ssid"
+            ;;
+        "󰤧  Show Available Wi-Fi")
+            show_wifi_list
+            ;;
+        "$CANCEL_ICON  Exit Network Manager" | "")
+            break
+            ;;
         esac
     done
 }
