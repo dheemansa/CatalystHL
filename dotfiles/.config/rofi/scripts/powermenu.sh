@@ -6,7 +6,7 @@ set -euo pipefail
 #icons=("" "" "󰿅" "󱄌" "" "󰒲")
 
 options=("Lock" "Suspend" "Logout" "Reboot" "Shutdown")
-icons=("" "" "󰍃" "󰑓" "" )
+icons=("" "" "󰍃" "󰑓" "")
 ROFI_THEME="$HOME/.config/rofi/themes/powermenu.rasi"
 
 # Show Rofi menu
@@ -24,12 +24,12 @@ main() {
     selected=$(rofi_cmd)
     echo "Selected: $selected"
     case "$selected" in
-        "") loginctl lock-session ;;
-        "") systemctl suspend ;;
-        "󰍃") hyprctl dispatch exit ;;  # adjust for your WM logout command
-        "󰑓") systemctl reboot ;;
-        "") systemctl poweroff ;;
-        *) exit 1 ;;
+    "") loginctl lock-session ;;
+    "") systemctl suspend ;;
+    "󰍃") hyprctl dispatch exit ;; # adjust for your WM logout command
+    "󰑓") systemctl reboot ;;
+    "") systemctl poweroff ;;
+    *) exit 1 ;;
     esac
 }
 

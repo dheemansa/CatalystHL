@@ -5,9 +5,9 @@ SENSORS_OUTPUT=$(sensors 2>/dev/null || true)
 
 # Helper: extract the first numeric temperature (e.g. +42.0°C) from a line and return numeric value without unit
 extract_temp() {
-  local line="$1"
-  # awk: look for token matching [+|-]digits[.digits]°C, remove + and °C and print
-  echo "$line" | awk '{
+    local line="$1"
+    # awk: look for token matching [+|-]digits[.digits]°C, remove + and °C and print
+    echo "$line" | awk '{
     if (match($0, /[+-]?[0-9]+(\.[0-9]+)?°C/)) {
       val = substr($0, RSTART, RLENGTH)
       gsub(/[+°C]/, "", val)
@@ -19,11 +19,11 @@ extract_temp() {
 
 # Try to find the most accurate CPU temperature reading using different fallbacks
 temp=""
-if temp_val=$(echo "$SENSORS_OUTPUT" | grep -E -m 1 'Package id [0-9]+:|Tdie:' ); then
+if temp_val=$(echo "$SENSORS_OUTPUT" | grep -E -m 1 'Package id [0-9]+:|Tdie:'); then
     temp=$(extract_temp "$temp_val")
-elif temp_val=$(echo "$SENSORS_OUTPUT" | grep -m 1 'Tctl:' ); then
+elif temp_val=$(echo "$SENSORS_OUTPUT" | grep -m 1 'Tctl:'); then
     temp=$(extract_temp "$temp_val")
-elif temp_val=$(echo "$SENSORS_OUTPUT" | grep -m 1 'Core 0:' ); then
+elif temp_val=$(echo "$SENSORS_OUTPUT" | grep -m 1 'Core 0:'); then
     temp=$(extract_temp "$temp_val")
 else
     temp=""
@@ -78,7 +78,7 @@ fi
 
 # Output JSON for Waybar. Don't append °C if avg_temp is "N/A"
 if [ "$avg_temp" = "N/A" ]; then
-  printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$avg_temp" "$tooltip_escaped" "$temp_class"
+    printf '{"text":"%s","tooltip":"%s","class":"%s"}\n' "$avg_temp" "$tooltip_escaped" "$temp_class"
 else
-  printf '{"text":"%s°C","tooltip":"%s","class":"%s"}\n' "$avg_temp" "$tooltip_escaped" "$temp_class"
+    printf '{"text":"%s°C","tooltip":"%s","class":"%s"}\n' "$avg_temp" "$tooltip_escaped" "$temp_class"
 fi
