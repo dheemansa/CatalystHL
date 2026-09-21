@@ -28,7 +28,6 @@ wl-clipboard
 # --- Screenshot ---
 slurp
 grim
-tesseract
 
 
 # --- Screenrecord---
@@ -102,6 +101,10 @@ lm_sensors
 # ---- Media Player ------
 mpv
 
-
 # ---OOM management ----
 earlyoom
+
+# --- Extra ---
+tesseract
+tesseract-data-eng
+
