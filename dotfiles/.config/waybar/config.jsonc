@@ -85,6 +85,7 @@
         "format": "{icon} {percent}%",
         "format-icons": ["", "", "", "", "", "", "", "", "", ""],
         "tooltip": false,
+        "min-brightness": 1,
     },
 
     "cpu": {
@@ -103,7 +104,7 @@
 
     // use this icon for gpu 󰢮 nf-md-expansion_card when needed
     "clock": {
-        "format": "{:%H:%M %p}",
+        "format": "{:%I:%M %p}",
         "rotate": 0,
         "format-alt": "{:%R | 󰃭 %d·%m·%y}",
         "tooltip-format": "<tt>{calendar}</tt>",
